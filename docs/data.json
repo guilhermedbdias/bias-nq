@@ -1,0 +1,97 @@
+{
+ "updated": "2026-11-21T23:43:45.707668+00:00",
+ "spot": 25126.5,
+ "prev": 25126.5,
+ "total": -32,
+ "label": "Bearish",
+ "up": 27,
+ "levels": {
+  "p5": 23948.3,
+  "p25": 24643.8,
+  "p50": 25126.5,
+  "p75": 25609.2,
+  "p95": 26304.7
+ },
+ "modules": [
+  {
+   "k": "eq",
+   "name": "EQH / EQL",
+   "weight": 6,
+   "score": 50,
+   "contrib": 3,
+   "note": "equal highs mais perto, acima"
+  },
+  {
+   "k": "fund",
+   "name": "Fundamentals",
+   "weight": 4,
+   "score": -67,
+   "contrib": -3,
+   "note": "1/6 big techs acima da média de 50 dias"
+  },
+  {
+   "k": "vp",
+   "name": "Volume Profile",
+   "weight": 8,
+   "score": -75,
+   "contrib": -6,
+   "note": "VAH 28777 / POC 28413 / VAL 25569 (20 dias)"
+  },
+  {
+   "k": "candles",
+   "name": "Daily Candles",
+   "weight": 10,
+   "score": -66,
+   "contrib": -7,
+   "note": "fechou a 9% do range de ontem"
+  },
+  {
+   "k": "pat",
+   "name": "Known Patterns",
+   "weight": 4,
+   "score": 0,
+   "contrib": 0,
+   "note": "sem fonte automática"
+  },
+  {
+   "k": "pct",
+   "name": "Percentis",
+   "weight": 20,
+   "score": 0,
+   "contrib": 0,
+   "note": "preço no percentil 50 (VXN 45.2)"
+  },
+  {
+   "k": "trend",
+   "name": "Trends",
+   "weight": 15,
+   "score": -100,
+   "contrib": -15,
+   "note": "0/4 condições de alta"
+  },
+  {
+   "k": "bet",
+   "name": "Betting Markets",
+   "weight": 8,
+   "score": 0,
+   "contrib": 0,
+   "note": "sem fonte automática"
+  },
+  {
+   "k": "macro",
+   "name": "Macro Economics",
+   "weight": 15,
+   "score": -25,
+   "contrib": -4,
+   "note": "5d: yield10 -4.7%, dólar +0.4%, VIX +86.0%"
+  },
+  {
+   "k": "season",
+   "name": "Seasonality",
+   "weight": 10,
+   "score": 0,
+   "contrib": 0,
+   "note": "erro: float division by zero"
+  }
+ ]
+}
