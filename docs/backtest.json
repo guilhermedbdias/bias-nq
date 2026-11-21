@@ -1,0 +1,209 @@
+{
+ "gerado": "2026-11-21T23:53:00.747704+00:00",
+ "inicio": "2019-02-21",
+ "fim": "2026-11-19",
+ "tudo": {
+  "dias": 1952,
+  "base": {
+   "sobe_pct": 55.7,
+   "media_pct": 0.077
+  },
+  "faixas": [
+   {
+    "faixa": "≤ −30",
+    "dias": 27,
+    "sobe_pct": 51.9,
+    "media_pct": -0.799
+   },
+   {
+    "faixa": "−29 a −15",
+    "dias": 209,
+    "sobe_pct": 51.2,
+    "media_pct": 0.082
+   },
+   {
+    "faixa": "−14 a +14",
+    "dias": 822,
+    "sobe_pct": 56.7,
+    "media_pct": 0.12
+   },
+   {
+    "faixa": "+15 a +29",
+    "dias": 765,
+    "sobe_pct": 56.7,
+    "media_pct": 0.072
+   },
+   {
+    "faixa": "≥ +30",
+    "dias": 129,
+    "sobe_pct": 51.9,
+    "media_pct": 0.001
+   }
+  ],
+  "modulos": [
+   {
+    "modulo": "EQH / EQL",
+    "dias_bull": 951,
+    "dias_bear": 1001,
+    "sobe_se_bull": 55.7,
+    "sobe_se_bear": 55.7,
+    "vantagem": -0.0
+   },
+   {
+    "modulo": "Fundamentals",
+    "dias_bull": 1243,
+    "dias_bear": 491,
+    "sobe_se_bull": 55.9,
+    "sobe_se_bear": 56.6,
+    "vantagem": -0.7
+   },
+   {
+    "modulo": "Volume Profile",
+    "dias_bull": 1280,
+    "dias_bear": 672,
+    "sobe_se_bull": 56.5,
+    "sobe_se_bear": 54.3,
+    "vantagem": 2.2
+   },
+   {
+    "modulo": "Daily Candles",
+    "dias_bull": 1010,
+    "dias_bear": 719,
+    "sobe_se_bull": 55.0,
+    "sobe_se_bear": 57.3,
+    "vantagem": -2.3
+   },
+   {
+    "modulo": "Percentis",
+    "dias_bull": 733,
+    "dias_bear": 919,
+    "sobe_se_bull": 55.7,
+    "sobe_se_bear": 55.9,
+    "vantagem": -0.3
+   },
+   {
+    "modulo": "Trends",
+    "dias_bull": 1186,
+    "dias_bear": 498,
+    "sobe_se_bull": 55.6,
+    "sobe_se_bear": 55.0,
+    "vantagem": 0.6
+   },
+   {
+    "modulo": "Macro Economics",
+    "dias_bull": 663,
+    "dias_bear": 674,
+    "sobe_se_bull": 56.0,
+    "sobe_se_bear": 53.7,
+    "vantagem": 2.2
+   },
+   {
+    "modulo": "Seasonality",
+    "dias_bull": 1224,
+    "dias_bear": 0
+   }
+  ]
+ },
+ "ultimos_2_anos": {
+  "dias": 459,
+  "base": {
+   "sobe_pct": 55.3,
+   "media_pct": 0.047
+  },
+  "faixas": [
+   {
+    "faixa": "≤ −30",
+    "dias": 3,
+    "sobe_pct": 33.3,
+    "media_pct": -2.035
+   },
+   {
+    "faixa": "−29 a −15",
+    "dias": 61,
+    "sobe_pct": 52.5,
+    "media_pct": 0.128
+   },
+   {
+    "faixa": "−14 a +14",
+    "dias": 204,
+    "sobe_pct": 53.4,
+    "media_pct": -0.028
+   },
+   {
+    "faixa": "+15 a +29",
+    "dias": 161,
+    "sobe_pct": 59.0,
+    "media_pct": 0.14
+   },
+   {
+    "faixa": "≥ +30",
+    "dias": 30,
+    "sobe_pct": 56.7,
+    "media_pct": 0.105
+   }
+  ],
+  "modulos": [
+   {
+    "modulo": "EQH / EQL",
+    "dias_bull": 222,
+    "dias_bear": 237,
+    "sobe_se_bull": 56.8,
+    "sobe_se_bear": 54.0,
+    "vantagem": 2.7
+   },
+   {
+    "modulo": "Fundamentals",
+    "dias_bull": 246,
+    "dias_bear": 148,
+    "sobe_se_bull": 56.5,
+    "sobe_se_bear": 56.1,
+    "vantagem": 0.4
+   },
+   {
+    "modulo": "Volume Profile",
+    "dias_bull": 287,
+    "dias_bear": 172,
+    "sobe_se_bull": 55.4,
+    "sobe_se_bear": 55.2,
+    "vantagem": 0.2
+   },
+   {
+    "modulo": "Daily Candles",
+    "dias_bull": 232,
+    "dias_bear": 165,
+    "sobe_se_bull": 56.0,
+    "sobe_se_bear": 56.4,
+    "vantagem": -0.3
+   },
+   {
+    "modulo": "Percentis",
+    "dias_bull": 176,
+    "dias_bear": 217,
+    "sobe_se_bull": 56.8,
+    "sobe_se_bear": 55.3,
+    "vantagem": 1.5
+   },
+   {
+    "modulo": "Trends",
+    "dias_bull": 261,
+    "dias_bear": 139,
+    "sobe_se_bull": 55.2,
+    "sobe_se_bear": 53.2,
+    "vantagem": 1.9
+   },
+   {
+    "modulo": "Macro Economics",
+    "dias_bull": 148,
+    "dias_bear": 162,
+    "sobe_se_bull": 57.4,
+    "sobe_se_bear": 55.6,
+    "vantagem": 1.9
+   },
+   {
+    "modulo": "Seasonality",
+    "dias_bull": 293,
+    "dias_bear": 0
+   }
+  ]
+ }
+}
