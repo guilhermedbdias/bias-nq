@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backtest do bias</title>
+<style>
+:root{--bg:#0f1217;--surf:#171b22;--line:#262c36;--tx:#e8ebf0;--mut:#8b93a1}
+@media (prefers-color-scheme:light){:root{--bg:#f4f5f7;--surf:#fff;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280}}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;overflow-x:auto}
+h1{font-size:20px;font-weight:500}h2{font-size:15px;margin:0 0 8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--line);white-space:nowrap}
+th{color:var(--mut);font-weight:500;border-top:0}
+.n{color:var(--mut);font-size:13px}
+</style></head><body><main id="app"><p class="n">A carregar…</p></main>
+<script>
+function tab(h,rows){return '<table><tr>'+h.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+rows.map(function(r){return '<tr>'+r.map(function(x){return '<td>'+(x==null?'–':x)+'</td>'}).join('')+'</tr>'}).join('')+'</table>'}
+function blk(t,d){
+  var h='<section class="card"><h2>'+t+' ('+d.dias+' dias)</h2><p class="n">Base: em '+d.base.sobe_pct+'% dos dias o NQ subiu no dia seguinte (média '+d.base.media_pct+'%).</p>';
+  h+=tab(['Score','Dias','Subiu depois (%)','Média (%)'],d.faixas.map(function(f){return [f.faixa,f.dias,f.sobe_pct,f.media_pct]}));
+  h+='<p class="n">Por módulo (vantagem = subiu depois quando bullish menos quando bearish; perto de 0 = sem valor)</p>';
+  h+=tab(['Módulo','Dias bull','Dias bear','Vantagem (pts)'],d.modulos.map(function(m){return [m.modulo,m.dias_bull,m.dias_bear,m.vantagem]}));
+  return h+'</section>'}
+fetch('backtest.json?'+Date.now()).then(function(r){return r.json()}).then(function(d){
+  document.getElementById('app').innerHTML='<h1>Backtest do bias</h1><p class="n">De '+d.inicio+' a '+d.fim+'. Sinal no fecho do dia, resultado no dia seguinte. Não é aconselhamento financeiro.</p>'+blk('Todo o período',d.tudo)+blk('Últimos 2 anos',d.ultimos_2_anos)
+}).catch(function(){document.getElementById('app').innerHTML='<p class="n">Ainda não há resultados. Corre o workflow Backtest em Actions.</p>'});
+</script></body></html>
