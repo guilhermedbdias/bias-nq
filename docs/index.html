@@ -48,6 +48,9 @@ fetch('data.json?'+Date.now()).then(function(r){return r.json()}).then(function(
   h+='<p class="note">Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'. Ferramenta de leitura, não é aconselhamento financeiro.</p>';
   document.getElementById('app').innerHTML=h;
 }).catch(function(){document.getElementById('app').innerHTML='<p class="note">Ainda não há dados. Corre o workflow no separador Actions.</p>'});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)location.reload()});
+window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
+setInterval(function(){if(!document.hidden)location.reload()},1800000);
 </script>
 </body>
 </html>
