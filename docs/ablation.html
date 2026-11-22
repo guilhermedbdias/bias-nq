@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ablação do bias</title>
+<style>
+:root{--bg:#0f1217;--surf:#171b22;--line:#262c36;--tx:#e8ebf0;--mut:#8b93a1}
+@media (prefers-color-scheme:light){:root{--bg:#f4f5f7;--surf:#fff;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280}}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;overflow-x:auto}
+h1{font-size:20px;font-weight:500}h2{font-size:15px;margin:0 0 8px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--line);white-space:nowrap}
+th{color:var(--mut);font-weight:500;border-top:0}
+.n{color:var(--mut);font-size:13px}
+</style></head><body><main id="app"><p class="n">A carregar…</p></main>
+<script>
+function c(b){if(!b||b.win==null)return '<span class="n">n='+(b?b.n:0)+' (pouco)</span>';
+  var s=b.vs_base>0?'+':'';return b.win+'% (n='+b.n+') ['+s+b.vs_base+(Math.abs(b.vs_base)>2*b.se?' *':'')+']'}
+function blk(t,d){
+  var cp=d.completo,h='<section class="card"><h2>'+t+' ('+d.dias+' dias)</h2>';
+  h+='<p class="n">Base: o NQ sobe em '+cp.base_sobe+'% dos dias. Completo → bull '+c(cp.bull)+' | bear '+c(cp.bear)+' | total '+c(cp.comb)+'</p>';
+  h+='<table><tr><th>Módulo</th><th>Só ele: bull</th><th>Só ele: bear</th><th>Sem ele: total</th><th>Δ vs completo</th></tr>';
+  d.modulos.forEach(function(m){
+    if(!m.testavel){h+='<tr><td>'+m.nome+'</td><td colspan="4" class="n">sem dados (sempre 0), não testável</td></tr>';return}
+    var dl=(m.sem.comb&&m.sem.comb.win!=null&&cp.comb.win!=null)?(m.sem.comb.vs_base-cp.comb.vs_base).toFixed(1):'–';
+    h+='<tr><td>'+m.nome+'</td><td>'+c(m.so.bull)+'</td><td>'+c(m.so.bear)+'</td><td>'+c(m.sem.comb)+'</td><td>'+dl+'</td></tr>'});
+  return h+'</table></section>'}
+fetch('ablation.json?'+Date.now()).then(function(r){return r.json()}).then(function(d){
+  document.getElementById('app').innerHTML='<h1>Teste de ablação</h1><p class="n">De '+d.inicio+' a '+d.fim+'. Sinal bullish se score ≥ +15, bearish se ≤ −15. Valor entre [ ] = diferença face ao acaso (pontos %); * = mais de 2 erros-padrão (indício, não prova). Δ negativo = sem o módulo piora, ou seja, o módulo ajuda; Δ positivo = sem o módulo melhora, ou seja, o módulo atrapalha. Não é aconselhamento financeiro.</p>'+blk('Todo o período',d.tudo)+blk('1ª metade',d.metade1)+blk('2ª metade',d.metade2)
+}).catch(function(){document.getElementById('app').innerHTML='<p class="n">Ainda não há resultados. Corre o workflow Ablacao em Actions.</p>'});
+</script></body></html>
