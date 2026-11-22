@@ -39,4 +39,7 @@ fetch('vol.json?'+Date.now()).then(function(r){return r.json()}).then(function(d
   h+='<p class="n">Expansão = range do dia ≥ 1,5x a média dos últimos 20 dias. Valor entre [ ] = diferença face a todos os dias (pontos %); * = mais de 2 erros-padrão. Não inclui o calendário de eventos (FOMC, inflação, emprego, resultados), que muitas vezes provoca os dias grandes: confirma-o à parte. Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'. Não é aconselhamento financeiro.</p>';
   document.getElementById('app').innerHTML=h
 }).catch(function(){document.getElementById('app').innerHTML='<p class="n">Ainda não há dados. Corre o workflow Volatilidade em Actions.</p>'});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)location.reload()});
+window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
+setInterval(function(){if(!document.hidden)location.reload()},1800000);
 </script></body></html>
