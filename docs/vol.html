@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vai mexer-se muito?</title>
+<style>
+:root{--bg:#0f1217;--surf:#171b22;--line:#262c36;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429}
+@media (prefers-color-scheme:light){:root{--bg:#f4f5f7;--surf:#fff;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px;overflow-x:auto}
+.big{font-size:36px;font-weight:500;margin:0;letter-spacing:-.02em}
+.sub{color:var(--mut);margin:8px 0 0}
+h2{font-size:15px;margin:0 0 10px;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-top:1px solid var(--line)}
+th{color:var(--mut);font-weight:500;border-top:0}
+.on td:first-child{color:var(--hi);font-weight:600}
+.n{color:var(--mut);font-size:13px}
+.kv{display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)}
+.kv:first-of-type{border-top:0}
+</style></head><body><main id="app"><p class="n">A carregar…</p></main>
+<script>
+function pr(b){if(!b||b.p==null)return '<span class="n">n='+(b?b.n:0)+' (pouco)</span>';
+  var s=b.vs>0?'+':'';return b.p+'% (n='+b.n+') ['+s+b.vs+(Math.abs(b.vs)>2*b.se?' *':'')+']'}
+fetch('vol.json?'+Date.now()).then(function(r){return r.json()}).then(function(d){
+  var c=d.cenario,h='';
+  h+='<section class="card"><p class="n">Hoje vai mexer-se muito?</p><p class="big">'+d.label+'</p>';
+  h+='<p class="sub">'+(c.p!=null?'Em cenários iguais a este, o NQ teve um dia de expansão em '+c.p+'% das vezes (base: '+d.base_exp+'%), em '+c.n+' dias.':'Há poucos dias parecidos no histórico para dar um número.')+'</p></section>';
+  h+='<section class="card"><h2>Estado de hoje (dados até '+d.ref+')</h2>';
+  h+='<div class="kv"><span>Compressão (dias calmos recentes)</span><span>'+(d.estado.compressao?'sim':'não')+'</span></div>';
+  h+='<div class="kv"><span>Ontem foi dia de expansão</span><span>'+(d.estado.ontem_expansao?'sim':'não')+'</span></div>';
+  h+='<div class="kv"><span>VXN</span><span>'+d.vxn+' (percentil '+d.vxn_pct+'%, '+d.estado.vxn+')</span></div>';
+  h+='<div class="kv"><span>Range esperado nestes cenários (mediana)</span><span>'+(c.range_med!=null?c.range_med+'% ≈ '+d.range_pts+' pts':'–')+'</span></div>';
+  h+='<div class="kv"><span>Range mediano em qualquer dia</span><span>'+d.range_base+'%</span></div>';
+  h+='<div class="kv"><span>Movimento esperado pelo VXN (±1σ)</span><span>≈ '+d.sigma_pts+' pts</span></div></section>';
+  h+='<section class="card"><h2>Cada sinal, isolado (dias de expansão a seguir)</h2><table><tr><th>Condição</th><th>Resultado histórico</th></tr>';
+  d.marginais.forEach(function(m){h+='<tr class="'+(m.ativo?'on':'')+'"><td>'+m.cond+(m.ativo?' (ativo hoje)':'')+'</td><td>'+pr(m)+'</td></tr>'});
+  h+='</table></section>';
+  h+='<p class="n">Expansão = range do dia ≥ 1,5x a média dos últimos 20 dias. Valor entre [ ] = diferença face a todos os dias (pontos %); * = mais de 2 erros-padrão. Não inclui o calendário de eventos (FOMC, inflação, emprego, resultados), que muitas vezes provoca os dias grandes: confirma-o à parte. Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'. Não é aconselhamento financeiro.</p>';
+  document.getElementById('app').innerHTML=h
+}).catch(function(){document.getElementById('app').innerHTML='<p class="n">Ainda não há dados. Corre o workflow Volatilidade em Actions.</p>'});
+</script></body></html>
