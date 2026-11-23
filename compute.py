@@ -21,9 +21,9 @@ def clip(x, a=-100, b=100):
 
 TODAY = datetime.now(ZoneInfo("America/New_York")).date()
 nq = hist("NQ=F", "2y")
-closed = nq[nq.index.date < TODAY]
-spot = float(nq["Close"].iloc[-1])
-prev = float(closed["Close"].iloc[-1])
+closed = nq[nq.index.date < TODAY]          # só barras já fechadas
+spot = float(nq["Close"].iloc[-1])           # preço mais recente
+prev = float(closed["Close"].iloc[-1])       # fecho de ontem
 LEVELS = {}
 
 
@@ -119,7 +119,136 @@ def m_season():
     return clip(t * 15, -30, 30), f"média deste dia da semana: {x.mean()*100:+.2f}%"
 
 
-MODS = [("eq", "EQH / EQL", 6, m_eq), ("fund", "Fundamentals", 4, m_fund),
+TODAY_UTC = datetime.now(timezone.utc).date()
+
+
+def hist_h(t):
+    d = yf.download(t, period="10d", interval="1h", auto_adjust=True, progress=False)
+    if isinstance(d.columns, pd.MultiIndex):
+        d.columns = d.columns.get_level_values(0)
+    d = d.dropna(subset=["Close"])
+    d.index = d.index.tz_convert("UTC")
+    return d
+
+
+def sess(d):
+    x = d[d.index.date == TODAY_UTC]
+    a = x[(x.index.hour >= 0) & (x.index.hour < 6)]      # Ásia (00-06 UTC)
+    l = x[(x.index.hour >= 6) & (x.index.hour < 12)]     # Londres (06-12 UTC)
+    return x, a, l
+
+
+def m_amd():
+    """Bias do teu plano (AMD / PO3 / DOL) com o que dá para calcular sozinho."""
+    pts, notes = 0, []
+    c = closed["Close"]
+    s20, s50 = c.rolling(20).mean().iloc[-1], c.rolling(50).mean().iloc[-1]
+    if spot > s50 and s20 > s50:
+        pts += 25
+        notes.append("HTF em alta")
+    elif spot < s50 and s20 < s50:
+        pts -= 25
+        notes.append("HTF em baixa")
+    else:
+        notes.append("HTF misto")
+    pdh, pdl = float(closed["High"].iloc[-1]), float(closed["Low"].iloc[-1])
+    iso = closed.index.isocalendar()
+    key = iso["year"].astype(int) * 100 + iso["week"].astype(int)
+    ti = TODAY.isocalendar()
+    cur = int(ti[0]) * 100 + int(ti[1])
+    older = key[key < cur]
+    pwh = pwl = None
+    if len(older):
+        pw = closed[key == older.iloc[-1]]
+        pwh, pwl = float(pw["High"].max()), float(pw["Low"].min())
+    cw = closed[key == cur]
+    x = None
+    try:
+        x, a, l = sess(hist_h("NQ=F"))
+        if len(a) < 3 or len(l) < 1:
+            x = None
+    except Exception:
+        x = None
+    px, dh, dl = spot, spot, spot
+    if x is not None:
+        px, dh, dl = float(x["Close"].iloc[-1]), float(x["High"].max()), float(x["Low"].min())
+        ah, al = float(a["High"].max()), float(a["Low"].min())
+        lh, ll = float(l["High"].max()), float(l["Low"].min())
+        sh, sl = lh > ah, ll < al
+        if sl and not sh:
+            if px > al:
+                pts += 25
+                notes.append("Londres varreu mínimos da Ásia e recuperou (manipulação em baixa)")
+            else:
+                pts -= 15
+                notes.append("Londres rompeu mínimos da Ásia e ficou abaixo")
+        elif sh and not sl:
+            if px < ah:
+                pts -= 25
+                notes.append("Londres varreu máximos da Ásia e recuou (manipulação em alta)")
+            else:
+                pts += 15
+                notes.append("Londres rompeu máximos da Ásia e ficou acima")
+        elif sh and sl:
+            notes.append("Londres varreu os dois lados da Ásia")
+        else:
+            notes.append("Londres dentro da Ásia (acumulação em curso)")
+        if dh > pdh and px < pdh:
+            pts -= 25
+            notes.append("varreu PDH e recuou")
+        if dl < pdl and px > pdl:
+            pts += 25
+            notes.append("varreu PDL e recuperou")
+        tp = (x["High"] + x["Low"] + x["Close"]) / 3
+        if float(x["Volume"].sum()) > 0:
+            vw = float((tp * x["Volume"]).sum() / x["Volume"].sum())
+            pts += 10 if px > vw else -10
+            notes.append(f"{'acima' if px > vw else 'abaixo'} do VWAP ({vw:.0f})")
+        try:
+            ex, ea, el = sess(hist_h("ES=F"))
+            if sl and len(el) and float(el["Low"].min()) >= float(ea["Low"].min()):
+                pts += 15
+                notes.append("SMT em alta com o ES")
+            if sh and len(el) and float(el["High"].max()) <= float(ea["High"].max()):
+                pts -= 15
+                notes.append("SMT em baixa com o ES")
+        except Exception:
+            pass
+    else:
+        notes.append("sem dados intradiários hoje")
+    wk_hi = max(float(cw["High"].max()) if len(cw) else dh, dh)
+    wk_lo = min(float(cw["Low"].min()) if len(cw) else dl, dl)
+    up, dn = {}, {}
+    for k, v, hi, lo in [("PDH", pdh, dh, dl), ("PDL", pdl, dh, dl), ("PWH", pwh, wk_hi, wk_lo), ("PWL", pwl, wk_hi, wk_lo)]:
+        if v is None:
+            continue
+        if v > px and hi < v:
+            up[k] = v
+        if v < px and lo > v:
+            dn[k] = v
+    ka = min(up, key=lambda k: up[k] - px) if up else None
+    kb = min(dn, key=lambda k: px - dn[k]) if dn else None
+    if ka and kb:
+        toward_up = (up[ka] - px) < (px - dn[kb])
+    else:
+        toward_up = bool(ka)
+    if ka or kb:
+        pts += 15 if toward_up else -15
+        k = ka if toward_up else kb
+        v = up[k] if toward_up else dn[k]
+        notes.append(f"DOL mais próximo: {k} {v:.0f}")
+    if pdh > pdl:
+        pos = (px - pdl) / (pdh - pdl)
+        if 0.35 <= pos <= 0.65:
+            notes.append("preço no meio do range de ontem: zona de NO TRADE")
+        elif pos < 0 or pos > 1:
+            notes.append("preço fora do range de ontem")
+    if TODAY.weekday() in (1, 2):
+        notes.append("terça/quarta: janela típica de manipulação e do high/low da semana")
+    return clip(pts), "; ".join(notes) + f". PDH {pdh:.0f} PDL {pdl:.0f}" + (f" PWH {pwh:.0f} PWL {pwl:.0f}" if pwh else "")
+
+
+MODS = [("amd", "AMD / DOL (plano)", 15, m_amd), ("eq", "EQH / EQL", 6, m_eq), ("fund", "Fundamentals", 4, m_fund),
         ("vp", "Volume Profile", 8, m_vp), ("candles", "Daily Candles", 10, m_candles),
         ("pat", "Known Patterns", 4, None), ("pct", "Percentis", 20, m_pct),
         ("trend", "Trends", 15, m_trend), ("bet", "Betting Markets", 8, None),
@@ -139,6 +268,7 @@ for k, name, w, f in MODS:
     total += c
     mods.append({"k": k, "name": name, "weight": w, "score": sc, "contrib": c, "note": note})
 
+total = round(total * 100 / sum(w for _, _, w, _ in MODS))
 up = round(clip(50 + total * 0.72, 5, 95))
 label = ("Muito bearish" if total <= -40 else "Bearish" if total <= -10 else
          "Muito bullish" if total >= 40 else "Bullish" if total >= 10 else "Neutro")
