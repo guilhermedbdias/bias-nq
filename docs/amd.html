@@ -1,1 +1,49 @@
-
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMD: acumulação, manipulação, distribuição</title>
+<style>
+:root{--bg:#0f1217;--surf:#171b22;--line:#262c36;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429}
+@media (prefers-color-scheme:light){:root{--bg:#f4f5f7;--surf:#fff;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,sans-serif}
+main{max-width:680px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px;overflow-x:auto}
+h1{font-size:20px;font-weight:500;margin:0 0 6px}h2{font-size:16px;margin:0 0 4px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--line);white-space:nowrap}
+th{color:var(--mut);font-weight:500;border-top:0}
+.n{color:var(--mut);font-size:13px}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--line);font-size:13px}
+.hi td{color:var(--hi);font-weight:600}
+</style></head><body><main id="app"><p class="n">A carregar…</p></main>
+<script>
+var NM={A:'Acumulação',M:'Manipulação',D:'Distribuição',O:'Outro'};
+function cell(c,t){if(!c)return '–';var v=c[t+'_vs'],s=v>0?'+':'';return c[t]+'% ['+s+v+(c[t+'_star']?' *':'')+']'}
+function day(d){
+  var h='<section class="card"><h2>'+d.nome+' '+d.data+' <span class="tag">'+d.status+'</span></h2>';
+  if(d.status==='fechado'){
+    return h+'<p class="n">Foi um dia de <b>'+NM[d.tipo]+'</b>'+(d.lado?' ('+d.lado+')':'')+'.</p></section>'}
+  if(d.status==='sem sessão')return h+'<p class="n">Sem sessão.</p></section>';
+  var b=d.base,c=d.cond,best=null;
+  if(c){['A','M','D','O'].forEach(function(t){if(c[t+'_star']&&c[t+'_vs']>0&&(best===null||c[t+'_vs']>c[best+'_vs']))best=t})}
+  h+='<p><b>'+(best?'Mais provável neste contexto: '+NM[best]+' (+'+c[best+'_vs']+' pontos acima da base)':'Sem sinal claro: o contexto não se afasta do normal para '+d.nome.toLowerCase())+'</b></p>';
+  h+='<p class="n">Contexto: '+d.contexto+(c?' (n='+c.n+')':' (poucos dias parecidos, mostro só a base)')+'</p>';
+  h+='<table><tr><th>Tipo</th><th>Base ('+d.nome.toLowerCase()+', n='+b.n+')</th><th>Neste contexto [vs base]</th></tr>';
+  ['A','M','D','O'].forEach(function(t){h+='<tr class="'+(best===t?'hi':'')+'"><td>'+NM[t]+'</td><td>'+b[t]+'%</td><td>'+cell(c,t)+'</td></tr>'});
+  h+='</table>';
+  var x=c||b;
+  if(x.d_alta!=null||x.m_max!=null)h+='<p class="n">'+(x.d_alta!=null?'Quando é distribuição, '+x.d_alta+'% das vezes fecha em alta. ':'')+(x.m_max!=null?'Quando é manipulação, '+x.m_max+'% das vezes varre o máximo do dia anterior (em vez do mínimo).':'')+'</p>';
+  return h+'</section>'}
+fetch('amd.json?'+Date.now()).then(function(r){return r.json()}).then(function(d){
+  var h='<h1>Acumulação, manipulação ou distribuição?</h1><p class="n">Segunda a quarta, com regras objetivas sobre o diário do NQ. Dados até '+d.ref+'.</p>';
+  h+='<section class="card"><h2>HTF (gráfico diário)</h2><p class="n">Tendência: <b>'+d.htf+'</b> (preço e média 20d vs média 50d). Último dia fechado: <b>'+NM[d.ultimo_tipo]+'</b>'+(d.ultimo_lado?' ('+d.ultimo_lado+')':'')+'.</p></section>';
+  d.dias.forEach(function(x){h+=day(x)});
+  var l=d.ltf;
+  h+='<section class="card"><h2>LTF (hoje, intradiário)</h2>'+(l?'<p class="n">Ásia (00–06 UTC): '+l.asia_low+' – '+l.asia_high+'. Londres (06–12 UTC): '+l.lon_low+' – '+l.lon_high+'. Último: '+l.ultimo+'.</p><p>'+l.leitura+'</p><p class="n">Leitura descritiva, não testada.</p>':'<p class="n">Sem dados intradiários para hoje (fim de semana ou feriado).</p>')+'</section>';
+  h+='<p class="n"><b>Como ler</b>: a coluna Base mostra a frequência normal de cada tipo nesse dia da semana. A Manipulação costuma ser a mais frequente na base porque a regra apanha todos os dias que varrem um extremo e fecham dentro do range, por isso isso sozinho não diz nada. Só interessa quando o contexto se afasta da base (valor entre [ ] com *, mais de 2 erros-padrão).</p>';
+  h+='<p class="n"><b>Definições (as minhas, aproximadas)</b>: Acumulação = dia dentro do range do anterior ou com pouco range. Manipulação = varre o máximo ou o mínimo do dia anterior e fecha de volta dentro do range. Distribuição = fecha fora do range anterior, com range normal ou grande e fecho perto de um extremo. AMD é um conceito discricionário e estas regras são uma aproximação: não há prova de que o padrão se repita. Não é aconselhamento financeiro. Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'.</p>';
+  document.getElementById('app').innerHTML=h
+}).catch(function(){document.getElementById('app').innerHTML='<p class="n">Ainda não há dados. Corre o workflow AMD em Actions.</p>'});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)location.reload()});
+window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
+</script></body></html>
