@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-23T12:27:21.696580+00:00",
- "spot": 25904.8,
+ "updated": "2026-11-23T13:04:14.433650+00:00",
+ "spot": 25864.8,
  "prev": 25126.5,
- "total": -36,
+ "total": -38,
  "label": "Bearish",
- "up": 24,
+ "up": 23,
  "levels": {
   "p5": 23948.3,
   "p25": 24643.8,
@@ -17,9 +17,9 @@
    "k": "amd",
    "name": "AMD / DOL (plano)",
    "weight": 15,
-   "score": -25,
-   "contrib": -4,
-   "note": "HTF em baixa; Londres varreu máximos da Ásia e recuou (manipulação em alta); acima do VWAP (25883); DOL mais próximo: PDH 26604; preço no meio do range de ontem: zona de NO TRADE. PDH 26604 PDL 24976 PWH 28279 PWL 24976"
+   "score": -45,
+   "contrib": -7,
+   "note": "HTF em baixa; Londres varreu máximos da Ásia e recuou (manipulação em alta); abaixo do VWAP (25884); DOL mais próximo: PDH 26604; preço no meio do range de ontem: zona de NO TRADE. PDH 26604 PDL 24976 PWH 28279 PWL 24976"
   },
   {
    "k": "eq",
@@ -65,9 +65,9 @@
    "k": "pct",
    "name": "Percentis",
    "weight": 20,
-   "score": -60,
+   "score": -58,
    "contrib": -12,
-   "note": "preço no percentil 83 (VXN 45.2)"
+   "note": "preço no percentil 82 (VXN 45.2)"
   },
   {
    "k": "trend",
@@ -89,9 +89,9 @@
    "k": "macro",
    "name": "Macro Economics",
    "weight": 15,
-   "score": -24,
+   "score": -26,
    "contrib": -4,
-   "note": "5d: yield10 -4.7%, dólar +0.3%, VIX +32.3%"
+   "note": "5d: yield10 -4.7%, dólar +0.5%, VIX +38.3%"
   },
   {
    "k": "season",
