@@ -1,0 +1,114 @@
+{
+ "updated": "2026-11-23T12:18:26.843114+00:00",
+ "ref": "2026-11-20",
+ "ultimo_tipo": "D",
+ "ultimo_lado": "baixa",
+ "htf": "baixa",
+ "dias": [
+  {
+   "nome": "Segunda",
+   "data": "23/11",
+   "status": "hoje",
+   "contexto": "dia anterior = D, HTF baixa",
+   "base": {
+    "n": 462,
+    "A": 27.7,
+    "M": 34.2,
+    "D": 22.1,
+    "O": 16.0,
+    "d_alta": 58,
+    "m_max": 42
+   },
+   "cond": {
+    "n": 118,
+    "A": 22.9,
+    "M": 43.2,
+    "D": 21.2,
+    "O": 12.7,
+    "d_alta": 36,
+    "m_max": 31,
+    "A_vs": -4.8,
+    "A_star": false,
+    "M_vs": 9.0,
+    "M_star": false,
+    "D_vs": -0.9,
+    "D_star": false,
+    "O_vs": -3.3,
+    "O_star": false
+   }
+  },
+  {
+   "nome": "Terça",
+   "data": "24/11",
+   "status": "previsto",
+   "contexto": "HTF baixa (depende do que acontecer antes)",
+   "base": {
+    "n": 507,
+    "A": 24.5,
+    "M": 36.9,
+    "D": 21.3,
+    "O": 17.4,
+    "d_alta": 56,
+    "m_max": 50
+   },
+   "cond": {
+    "n": 97,
+    "A": 30.9,
+    "M": 32.0,
+    "D": 20.6,
+    "O": 16.5,
+    "d_alta": 60,
+    "m_max": 42,
+    "A_vs": 6.4,
+    "A_star": false,
+    "M_vs": -4.9,
+    "M_star": false,
+    "D_vs": -0.7,
+    "D_star": false,
+    "O_vs": -0.9,
+    "O_star": false
+   }
+  },
+  {
+   "nome": "Quarta",
+   "data": "25/11",
+   "status": "previsto",
+   "contexto": "HTF baixa (depende do que acontecer antes)",
+   "base": {
+    "n": 504,
+    "A": 22.6,
+    "M": 40.3,
+    "D": 24.4,
+    "O": 12.7,
+    "d_alta": 57,
+    "m_max": 47
+   },
+   "cond": {
+    "n": 98,
+    "A": 23.5,
+    "M": 34.7,
+    "D": 30.6,
+    "O": 11.2,
+    "d_alta": 53,
+    "m_max": 47,
+    "A_vs": 0.9,
+    "A_star": false,
+    "M_vs": -5.6,
+    "M_star": false,
+    "D_vs": 6.2,
+    "D_star": false,
+    "O_vs": -1.5,
+    "O_star": false
+   }
+  }
+ ],
+ "ltf": {
+  "asia_high": 25945.0,
+  "asia_low": 25610.8,
+  "lon_high": 26102.2,
+  "lon_low": 25805.5,
+  "ultimo": 26001.8,
+  "leitura": "Londres rompeu os máximos da Ásia e ficou acima: possível distribuição em alta."
+ },
+ "n_hist": 2466
+}
