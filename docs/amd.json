@@ -1,47 +1,22 @@
 {
- "updated": "2026-11-23T13:46:50.377097+00:00",
- "ref": "2026-11-20",
+ "updated": "2026-11-24T13:39:16.416353+00:00",
+ "ref": "2026-11-23",
  "ultimo_tipo": "D",
- "ultimo_lado": "baixa",
+ "ultimo_lado": "alta",
  "htf": "baixa",
  "dias": [
   {
    "nome": "Segunda",
    "data": "23/11",
-   "status": "hoje",
-   "contexto": "dia anterior = D, HTF baixa",
-   "base": {
-    "n": 462,
-    "A": 27.7,
-    "M": 34.2,
-    "D": 22.1,
-    "O": 16.0,
-    "d_alta": 58,
-    "m_max": 42
-   },
-   "cond": {
-    "n": 118,
-    "A": 22.9,
-    "M": 43.2,
-    "D": 21.2,
-    "O": 12.7,
-    "d_alta": 36,
-    "m_max": 31,
-    "A_vs": -4.8,
-    "A_star": false,
-    "M_vs": 9.0,
-    "M_star": false,
-    "D_vs": -0.9,
-    "D_star": false,
-    "O_vs": -3.3,
-    "O_star": false
-   }
+   "status": "fechado",
+   "tipo": "D",
+   "lado": "alta"
   },
   {
    "nome": "Terça",
    "data": "24/11",
-   "status": "previsto",
-   "contexto": "HTF baixa (depende do que acontecer antes)",
+   "status": "hoje",
+   "contexto": "dia anterior = D, HTF baixa",
    "base": {
     "n": 507,
     "A": 24.5,
@@ -52,20 +27,20 @@
     "m_max": 50
    },
    "cond": {
-    "n": 97,
-    "A": 30.9,
-    "M": 32.0,
-    "D": 20.6,
-    "O": 16.5,
-    "d_alta": 60,
-    "m_max": 42,
-    "A_vs": 6.4,
+    "n": 119,
+    "A": 22.7,
+    "M": 42.9,
+    "D": 21.8,
+    "O": 12.6,
+    "d_alta": 38,
+    "m_max": 31,
+    "A_vs": -1.8,
     "A_star": false,
-    "M_vs": -4.9,
+    "M_vs": 6.0,
     "M_star": false,
-    "D_vs": -0.7,
+    "D_vs": 0.5,
     "D_star": false,
-    "O_vs": -0.9,
+    "O_vs": -4.8,
     "O_star": false
    }
   },
@@ -103,12 +78,12 @@
   }
  ],
  "ltf": {
-  "asia_high": 25945.0,
-  "asia_low": 25610.8,
-  "lon_high": 26102.2,
-  "lon_low": 25805.5,
-  "ultimo": 26001.8,
-  "leitura": "Londres rompeu os máximos da Ásia e ficou acima: possível distribuição em alta."
+  "asia_high": 27036.0,
+  "asia_low": 26707.0,
+  "lon_high": 26949.5,
+  "lon_low": 26255.0,
+  "ultimo": 26441.0,
+  "leitura": "Londres rompeu os mínimos da Ásia e ficou abaixo: possível distribuição em baixa."
  },
  "n_hist": 2466
 }
