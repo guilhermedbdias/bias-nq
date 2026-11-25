@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-24T13:39:16.416353+00:00",
- "ref": "2026-11-23",
- "ultimo_tipo": "D",
- "ultimo_lado": "alta",
+ "updated": "2026-11-25T13:45:30.529895+00:00",
+ "ref": "2026-11-24",
+ "ultimo_tipo": "A",
+ "ultimo_lado": "",
  "htf": "baixa",
  "dias": [
   {
@@ -15,40 +15,15 @@
   {
    "nome": "Terça",
    "data": "24/11",
-   "status": "hoje",
-   "contexto": "dia anterior = D, HTF baixa",
-   "base": {
-    "n": 507,
-    "A": 24.5,
-    "M": 36.9,
-    "D": 21.3,
-    "O": 17.4,
-    "d_alta": 56,
-    "m_max": 50
-   },
-   "cond": {
-    "n": 119,
-    "A": 22.7,
-    "M": 42.9,
-    "D": 21.8,
-    "O": 12.6,
-    "d_alta": 38,
-    "m_max": 31,
-    "A_vs": -1.8,
-    "A_star": false,
-    "M_vs": 6.0,
-    "M_star": false,
-    "D_vs": 0.5,
-    "D_star": false,
-    "O_vs": -4.8,
-    "O_star": false
-   }
+   "status": "fechado",
+   "tipo": "A",
+   "lado": ""
   },
   {
    "nome": "Quarta",
    "data": "25/11",
-   "status": "previsto",
-   "contexto": "HTF baixa (depende do que acontecer antes)",
+   "status": "hoje",
+   "contexto": "dia anterior = A, HTF baixa",
    "base": {
     "n": 504,
     "A": 22.6,
@@ -59,31 +34,31 @@
     "m_max": 47
    },
    "cond": {
-    "n": 98,
-    "A": 23.5,
-    "M": 34.7,
-    "D": 30.6,
-    "O": 11.2,
-    "d_alta": 53,
-    "m_max": 47,
-    "A_vs": 0.9,
+    "n": 125,
+    "A": 28.0,
+    "M": 26.4,
+    "D": 26.4,
+    "O": 19.2,
+    "d_alta": 52,
+    "m_max": 36,
+    "A_vs": 5.4,
     "A_star": false,
-    "M_vs": -5.6,
-    "M_star": false,
-    "D_vs": 6.2,
+    "M_vs": -13.9,
+    "M_star": true,
+    "D_vs": 2.0,
     "D_star": false,
-    "O_vs": -1.5,
+    "O_vs": 6.5,
     "O_star": false
    }
   }
  ],
  "ltf": {
-  "asia_high": 27036.0,
-  "asia_low": 26707.0,
-  "lon_high": 26949.5,
-  "lon_low": 26255.0,
-  "ultimo": 26441.0,
+  "asia_high": 26246.0,
+  "asia_low": 25869.8,
+  "lon_high": 25958.8,
+  "lon_low": 25514.2,
+  "ultimo": 25533.0,
   "leitura": "Londres rompeu os mínimos da Ásia e ficou abaixo: possível distribuição em baixa."
  },
- "n_hist": 2466
+ "n_hist": 2467
 }
