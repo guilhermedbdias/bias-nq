@@ -1,25 +1,25 @@
 {
- "updated": "2026-11-24T13:04:38.402233+00:00",
- "spot": 26394.5,
- "prev": 26808.0,
- "total": -4,
- "label": "Neutro",
- "up": 47,
+ "updated": "2026-11-25T13:08:47.574173+00:00",
+ "spot": 25525.2,
+ "prev": 26275.8,
+ "total": -18,
+ "label": "Bearish",
+ "up": 37,
  "levels": {
-  "p5": 25799.3,
-  "p25": 26394.7,
-  "p50": 26808.0,
-  "p75": 27221.3,
-  "p95": 27816.7
+  "p5": 25284.1,
+  "p25": 25869.4,
+  "p50": 26275.8,
+  "p75": 26682.1,
+  "p95": 27267.4
  },
  "modules": [
   {
    "k": "amd",
    "name": "AMD / DOL (plano)",
    "weight": 15,
-   "score": -35,
-   "contrib": -5,
-   "note": "HTF em baixa; Londres rompeu mínimos da Ásia e ficou abaixo; abaixo do VWAP (26664); DOL mais próximo: PDH 27137; preço no meio do range de ontem: zona de NO TRADE; terça/quarta: janela típica de manipulação e do high/low da semana. PDH 27137 PDL 25427 PWH 28279 PWL 24976"
+   "score": -65,
+   "contrib": -10,
+   "note": "HTF em baixa; Londres rompeu mínimos da Ásia e ficou abaixo; abaixo do VWAP (25842); DOL mais próximo: PWL 24976; preço fora do range de ontem; terça/quarta: janela típica de manipulação e do high/low da semana. PDH 27036 PDL 25998 PWH 28279 PWL 24976"
   },
   {
    "k": "eq",
@@ -33,25 +33,25 @@
    "k": "fund",
    "name": "Fundamentals",
    "weight": 4,
-   "score": -33,
-   "contrib": -1,
-   "note": "2/6 big techs acima da média de 50 dias"
+   "score": -67,
+   "contrib": -3,
+   "note": "1/6 big techs acima da média de 50 dias"
   },
   {
    "k": "vp",
    "name": "Volume Profile",
    "weight": 8,
-   "score": -25,
-   "contrib": -2,
+   "score": -75,
+   "contrib": -6,
    "note": "VAH 28777 / POC 28413 / VAL 25569 (20 dias)"
   },
   {
    "k": "candles",
    "name": "Daily Candles",
    "weight": 10,
-   "score": 56,
-   "contrib": 6,
-   "note": "fechou a 81% do range de ontem"
+   "score": -23,
+   "contrib": -2,
+   "note": "fechou a 27% do range de ontem"
   },
   {
    "k": "pat",
@@ -65,9 +65,9 @@
    "k": "pct",
    "name": "Percentis",
    "weight": 20,
-   "score": 45,
-   "contrib": 9,
-   "note": "preço no percentil 25 (VXN 36.3)"
+   "score": 66,
+   "contrib": 13,
+   "note": "preço no percentil 13 (VXN 36.4)"
   },
   {
    "k": "trend",
@@ -89,17 +89,17 @@
    "k": "macro",
    "name": "Macro Economics",
    "weight": 15,
-   "score": -12,
-   "contrib": -2,
-   "note": "5d: yield10 -4.0%, dólar +0.4%, VIX +13.3%"
+   "score": -25,
+   "contrib": -4,
+   "note": "5d: yield10 -3.9%, dólar +0.1%, VIX +25.6%"
   },
   {
    "k": "season",
    "name": "Seasonality",
    "weight": 10,
-   "score": 24,
-   "contrib": 2,
-   "note": "média deste dia da semana: +0.09%"
+   "score": 30,
+   "contrib": 3,
+   "note": "média deste dia da semana: +0.14%"
   }
  ]
 }
