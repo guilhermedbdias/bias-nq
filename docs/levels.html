@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NQ Hub · Níveis</title>
+<style>
+:root{--bg:#0d1014;--surf:#151a21;--surf2:#1b212a;--line:#252c37;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429;--bull:#2fbf71;--bear:#e5484d;--g1:#f0b429;--g2:#5b9cf5;--g3:#2fbf71;--g4:#f08a29;--g5:#a78bfa}
+@media (prefers-color-scheme:light){:root{--bg:#f3f4f7;--surf:#fff;--surf2:#f6f7f9;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f;--g1:#b7791f;--g2:#2563c9;--g3:#168a4f;--g4:#c2631a;--g5:#7c5ad6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{max-width:980px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.logo{font-weight:700;font-size:17px}.logo span{color:var(--hi)}.goal{color:var(--mut);font-size:13px}
+nav{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto}
+nav a{padding:8px 14px;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a.on{color:var(--tx);border-color:var(--hi);font-weight:600}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;overflow-x:auto}
+h1{font-size:22px;margin:0 0 4px;font-weight:600}
+.n{color:var(--mut);font-size:13px}
+.leg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0 0}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.lad{display:grid;grid-template-columns:78px 1fr;font-size:13px}
+.r{display:contents}
+.r>div{padding:3px 6px;border-top:1px solid var(--line);min-height:26px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.r .p{justify-content:flex-end;font-variant-numeric:tabular-nums;color:var(--mut)}
+.r.cur>div{background:rgba(240,180,41,.16)}.r.cur .p{color:var(--hi);font-weight:700}
+.vb{height:8px;border-radius:3px;background:var(--surf2);border:1px solid var(--line);flex:none;position:relative;width:70px;overflow:hidden}
+.vb i{position:absolute;left:0;top:0;bottom:0;background:var(--mut);opacity:.7}
+.tg{padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid;white-space:nowrap}
+.g-prior{color:var(--g1);border-color:var(--g1)}.g-session{color:var(--g2);border-color:var(--g2)}.g-profile{color:var(--g3);border-color:var(--g3)}.g-week{color:var(--g4);border-color:var(--g4)}.g-gamma{color:var(--g5);border-color:var(--g5)}
+</style></head><body>
+<header><div class="top"><div class="logo">NQ <span>Hub</span></div><div class="goal">10K até fevereiro · disciplina, plano e journal</div></div>
+<nav><a href="index.html#hoje">Hoje</a><a href="index.html#bias">Bias</a><a href="index.html#vol">Volatilidade</a><a href="index.html#amd">AMD</a><a href="index.html#plano">Plano</a><a href="index.html#testes">Testes</a><a href="journal.html">Journal</a><a href="gamma.html">Gamma</a><a class="on" href="levels.html">Níveis</a></nav></header>
+<main id="app"><p class="n">A carregar…</p></main>
+<script>
+function J(u){return fetch(u+'?'+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return null})}
+function go(){Promise.all([J('levels.json'),J('gamma.json')]).then(function(x){draw(x[0],x[1])})}
+function draw(L,G){
+  var app=document.getElementById('app');
+  if(!L){app.innerHTML='<section class="card"><p class="n">Ainda não há dados. Corre o workflow "Niveis" em Actions (Run workflow).</p></section>';return}
+  var lv=L.levels.slice();
+  if(G&&G.sets&&G.sets['1d']){var s=G.sets['1d'];[['Call wall (gamma)','call_wall_nq'],['Put wall (gamma)','put_wall_nq'],['Zero gamma','zero_gamma_nq'],['Max pain','max_pain_nq'],['Pin (gamma)','pin_nq']].forEach(function(a){if(s[a[1]])lv.push({name:a[0],price:s[a[1]],group:'gamma'})})}
+  var last=L.last,ST=20,top=Math.ceil((last+500)/ST)*ST,bot=Math.floor((last-500)/ST)*ST,rows=[],curRow=Math.floor(last/ST)*ST;
+  var vol={},mx=1;L.buckets.forEach(function(b){var r=Math.floor(b.p/ST)*ST;vol[r]=(vol[r]||0)+b.v;if(vol[r]>mx)mx=vol[r]});
+  var h='<h1>Níveis do NQ</h1><p class="n">Última cotação '+last+' · '+(L.active?'sessão a decorrer':'fora da sessão regular')+' · volume = perfil da sessão anterior ('+(L.info.prev_date||'–')+'). Dados do Yahoo (atrasados), sem fluxo por tamanho de ordem.</p>';
+  h+='<section class="card"><div class="leg"><span><i style="background:var(--g1)"></i>sessão anterior</span><span><i style="background:var(--g2)"></i>sessões (Ásia, Londres, NY, IB)</span><span><i style="background:var(--g3)"></i>perfil de volume e VWAP</span><span><i style="background:var(--g4)"></i>semana</span><span><i style="background:var(--g5)"></i>gamma (QQQ→NQ)</span></div><div class="lad" style="margin-top:12px">';
+  for(var p=top;p>=bot;p-=ST){
+    var tags=lv.filter(function(z){return z.price>=p&&z.price<p+ST}).sort(function(a,b){return b.price-a.price}).map(function(z){return '<span class="tg g-'+z.group+'">'+z.name+' '+Math.round(z.price)+'</span>'}).join('');
+    var v=vol[p]||0;
+    h+='<div class="r'+(p===curRow?' cur':'')+'"><div class="p">'+p+'</div><div><span class="vb"><i style="width:'+(v/mx*100)+'%"></i></span>'+tags+(p===curRow?'<span class="n">← preço</span>':'')+'</div></div>'}
+  h+='</div></section><p class="n">POC = preço com mais volume; VAH/VAL = limites da zona com 70% do volume. O perfil usa o volume das barras de 5 minutos espalhado pelo range de cada barra, por isso é uma aproximação. Níveis de gamma vêm da página Gamma (estimativa grátis). É contexto, não previsão nem aconselhamento financeiro. Atualizado: '+new Date(L.updated).toLocaleString('pt-PT')+'.</p>';
+  app.innerHTML=h}
+go();
+document.addEventListener('visibilitychange',function(){if(!document.hidden)go()});
+</script></body></html>
