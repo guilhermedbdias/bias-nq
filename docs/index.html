@@ -1,56 +1,209 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bias NQ</title>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NQ Hub</title>
 <style>
-:root{--bg:#0f1217;--surf:#171b22;--line:#262c36;--tx:#e8ebf0;--mut:#8b93a1;--bear:#f08a74;--bull:#3ecf95;--track:#1f242d}
-@media (prefers-color-scheme:light){:root{--bg:#f4f5f7;--surf:#fff;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--bear:#e0654d;--bull:#1f9d6b;--track:#e8ebf0}}
+:root{--bg:#0d1014;--surf:#151a21;--surf2:#1b212a;--line:#252c37;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429;--bull:#2fbf71;--bear:#e5484d}
+@media (prefers-color-scheme:light){:root{--bg:#f3f4f7;--surf:#fff;--surf2:#f6f7f9;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f;--bull:#168a4f;--bear:#cc2f34}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,sans-serif}
-main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
-.card{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px}
-.big{font-size:42px;font-weight:500;margin:0;letter-spacing:-.02em}
-.sub{color:var(--mut);margin:8px 0 18px}
-.meter{position:relative;height:12px;background:var(--track);border-radius:6px}
-.meter i{position:absolute;top:0;height:100%;border-radius:6px}
-.meter b{position:absolute;left:50%;top:-5px;width:2px;height:22px;background:var(--tx)}
-.ends{display:flex;justify-content:space-between;color:var(--mut);font-size:13px;margin-top:8px}
-h2{font-size:15px;margin:0 0 10px;font-weight:600}
-.row{display:grid;grid-template-columns:140px 1fr 40px;gap:12px;align-items:center;padding:9px 0}
-.row .t{position:relative;height:12px;background:var(--track);border-radius:6px}
-.row .t:before{content:"";position:absolute;left:50%;top:-3px;width:2px;height:18px;background:var(--line)}
-.row .d{position:absolute;top:-1px;width:14px;height:14px;border-radius:50%;margin-left:-7px}
-.row output{text-align:right;font-weight:500}
-.row small{grid-column:1/-1;color:var(--mut);font-size:12px;margin-top:-6px}
-.note{color:var(--mut);font-size:13px}
-@media (max-width:480px){.row{grid-template-columns:110px 1fr 36px}.big{font-size:34px}}
-</style>
-</head>
-<body>
-<main id="app"><p class="note">A carregar…</p></main>
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{max-width:980px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.logo{font-weight:700;letter-spacing:-.01em;font-size:17px}.logo span{color:var(--hi)}
+.goal{color:var(--mut);font-size:13px}
+nav{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto}
+nav a{padding:8px 14px;border-radius:10px 10px 0 0;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a.on{color:var(--tx);border-color:var(--hi);font-weight:600}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:14px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;overflow-x:auto}
+.grid .card{margin:0}
+h1{font-size:22px;margin:0 0 4px;font-weight:600;letter-spacing:-.01em}
+h2{font-size:13px;margin:0 0 10px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.big{font-size:34px;font-weight:600;margin:2px 0;letter-spacing:-.02em}
+.n{color:var(--mut);font-size:13px}.sub{color:var(--mut);margin:4px 0 10px}
+.meter{position:relative;height:10px;border-radius:99px;background:var(--surf2);border:1px solid var(--line);margin:12px 0 6px}
+.meter i{position:absolute;top:0;bottom:0;border-radius:99px}.meter b{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--mut)}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.row{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row small{grid-column:1/-1;color:var(--mut);font-size:12px;margin-top:-4px}
+.t{position:relative;height:6px;background:var(--surf2);border-radius:99px;border:1px solid var(--line)}
+.t .d{position:absolute;top:-4px;width:12px;height:12px;border-radius:50%;margin-left:-6px}
+.t:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--mut)}
+output{text-align:right;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:500;border-top:0;font-size:13px}
+.on td:first-child{color:var(--hi);font-weight:600}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line)}
+.kv:first-of-type{border-top:0}.kv span:last-child{text-align:right}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;background:var(--surf2);border:1px solid var(--line);font-size:12px;color:var(--mut)}
+.chk{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.chk:first-of-type{border-top:0}
+.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--hi);flex:none}
+.chk.done span{color:var(--mut);text-decoration:line-through}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+button,select,textarea,input[type=text]{font:inherit;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+button{cursor:pointer;font-weight:600}
+button.sel.go{background:var(--bull);border-color:var(--bull);color:#fff}
+button.sel.no{background:var(--bear);border-color:var(--bear);color:#fff}
+textarea{width:100%;min-height:70px;resize:vertical}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+.bar{height:8px;background:var(--surf2);border-radius:99px;overflow:hidden;border:1px solid var(--line);margin:6px 0}
+.bar i{display:block;height:100%;background:var(--hi)}
+a.lnk{color:var(--hi);text-decoration:none}
+.warn{border-color:var(--hi)}
+@media(max-width:520px){.row{grid-template-columns:110px 1fr 40px}.big{font-size:28px}}
+</style></head><body>
+<header><div class="top"><div class="logo">NQ <span>Hub</span></div><div class="goal">10K até fevereiro · disciplina, plano e journal</div></div>
+<nav id="nav"></nav></header>
+<main id="app"><p class="n">A carregar…</p></main>
 <script>
+var TABS=[['hoje','Hoje'],['bias','Bias'],['vol','Volatilidade'],['amd','AMD'],['plano','Plano'],['testes','Testes']];
+function J(u){return fetch(u+'?'+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return null})}
 function col(v){return v>0?'var(--bull)':v<0?'var(--bear)':'var(--mut)'}
 function sg(v){return (v>0?'+':v<0?'−':'')+Math.abs(v)}
-fetch('data.json?'+Date.now()).then(function(r){return r.json()}).then(function(d){
-  var w=Math.abs(d.total)/2, l=d.total<0?50-w:50, h='';
-  h+='<section class="card"><p class="big">'+d.label+'</p><p class="sub">Score '+sg(d.total)+' · valor do modelo '+d.up+'% alta, '+(100-d.up)+'% baixa</p>'+
-     '<div class="meter"><i style="left:'+l+'%;width:'+w+'%;background:'+col(d.total)+'"></i><b></b></div>'+
-     '<div class="ends"><span>Bearish −100</span><span>0</span><span>+100 Bullish</span></div></section>';
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function none(t){return '<section class="card"><p class="n">Ainda não há dados ('+t+'). Corre o workflow correspondente em Actions.</p></section>'}
+function when(d){return '<p class="n">Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'</p>'}
+function meter(total){var w=Math.abs(total)/2,l=total<0?50-w:50;return '<div class="meter"><i style="left:'+l+'%;width:'+w+'%;background:'+col(total)+'"></i><b></b></div><div class="ends"><span>Bearish −100</span><span>0</span><span>+100 Bullish</span></div>'}
+function pr(b){if(!b||b.p==null)return '<span class="n">n='+(b?b.n:0)+' (pouco)</span>';var s=b.vs>0?'+':'';return b.p+'% (n='+b.n+') ['+s+b.vs+(Math.abs(b.vs)>2*b.se?' *':'')+']'}
+var NM={A:'Acumulação',M:'Manipulação',D:'Distribuição',O:'Outro'};
+function topAMD(d){
+  var x=(d.dias||[]).filter(function(y){return y.status!=='fechado'&&y.status!=='sem sessão'})[0];
+  if(!x)return null;var c=x.cond||x.base,top=null;
+  ['A','M','D','O'].forEach(function(t){if(top===null||c[t]>top.v)top={t:t,v:c[t]}});
+  var base=x.base,diff=x.cond?top.v-base[top.t]:0;
+  return {dia:x.nome,tipo:top.t,v:top.v,claro:!!x.cond&&Math.abs(diff)>3,ctx:x.contexto}}
+
+/* ---------- HOJE ---------- */
+function vHoje(b,v,a){
+  var h='<h1>Hoje</h1><p class="n">Resumo dos painéis. É contexto para o teu plano, não uma previsão.</p><div class="grid">';
+  h+='<section class="card"><h2>Bias</h2>'+(b?'<p class="big" style="color:'+col(b.total)+'">'+b.label+'</p><p class="sub">Score '+sg(b.total)+'</p>'+meter(b.total)+'<p style="margin:12px 0 0"><a class="lnk" href="#bias">ver módulos →</a></p>':'<p class="n">sem dados</p>')+'</section>';
+  h+='<section class="card"><h2>Vai mexer-se muito?</h2>'+(v?'<p class="big">'+esc(v.label)+'</p><p class="sub">'+(v.cenario.p!=null?'Em cenários iguais: expansão '+v.cenario.p+'% (base '+v.base_exp+'%)':'Poucos dias parecidos')+'</p><p class="n">Movimento ±1σ pelo VXN ≈ '+v.sigma_pts+' pts</p><p style="margin:12px 0 0"><a class="lnk" href="#vol">ver detalhe →</a></p>':'<p class="n">sem dados</p>')+'</section>';
+  var t=a?topAMD(a):null;
+  h+='<section class="card"><h2>AMD</h2>'+(a?(t?'<p class="big">'+(t.claro?NM[t.tipo]:'Sem sinal claro')+'</p><p class="sub">'+t.dia+' · tendência HTF: '+a.htf+'</p><p class="n">'+(t.claro?'Mais provável neste contexto ('+t.v+'%)':'Nenhum tipo se destaca da base')+'</p>':'<p class="n">Sem sessão hoje.</p>')+'<p style="margin:12px 0 0"><a class="lnk" href="#amd">ver detalhe →</a></p>':'<p class="n">sem dados</p>')+'</section>';
+  h+='</div>';
+  if(b){
+    var m=b.modules.filter(function(x){return x.k==='amd'||x.k==='struct'});
+    m.forEach(function(x){h+='<section class="card"><h2>'+x.name+' · '+sg(x.contrib)+'</h2><p style="margin:0">'+esc(x.note)+'</p></section>'});
+    var L=b.levels||{};
+    if(L.p5)h+='<section class="card"><h2>Percentis de hoje (NQ)</h2><div class="kv"><span>P5 / P25</span><span>'+L.p5+' / '+L.p25+'</span></div><div class="kv"><span>P50 (mediana)</span><span>'+L.p50+'</span></div><div class="kv"><span>P75 / P95</span><span>'+L.p75+' / '+L.p95+'</span></div><div class="kv"><span>Fecho de ontem · preço usado</span><span>'+b.prev+' · '+b.spot+'</span></div></section>'}
+  var p=loadPlan();var done=Object.keys(p.c||{}).filter(function(k){return p.c[k]}).length;
+  h+='<section class="card warn"><h2>O teu plano de hoje</h2><div class="kv"><span>Checklist</span><span>'+done+' / '+CHK_TOTAL+'</span></div><div class="kv"><span>O teu bias</span><span>'+(p.bias||'por definir')+'</span></div><div class="kv"><span>Decisão</span><span>'+(p.dec||'por decidir')+'</span></div><p style="margin:12px 0 0"><a class="lnk" href="#plano">abrir o plano →</a></p></section>';
+  h+='<p class="n">Ferramenta de leitura, não é aconselhamento financeiro. Os testes mostraram que o bias de direção não tem vantagem provada.</p>';
+  return h}
+
+/* ---------- BIAS ---------- */
+function vBias(d){
+  if(!d)return none('data.json');
+  var h='<h1>Bias</h1><section class="card"><p class="big" style="color:'+col(d.total)+'">'+d.label+'</p><p class="sub">Score '+sg(d.total)+' · valor do modelo '+d.up+'% alta, '+(100-d.up)+'% baixa (mapa linear, não é probabilidade calibrada)</p>'+meter(d.total)+'</section>';
   h+='<section class="card"><h2>Contribuição por módulo</h2>';
-  d.modules.forEach(function(m){
-    h+='<div class="row"><span>'+m.name+'</span><div class="t"><span class="d" style="left:'+(50+m.score/2)+'%;background:'+col(m.score)+'"></span></div><output style="color:'+col(m.contrib)+'">'+sg(m.contrib)+'</output><small>'+m.note+'</small></div>';
-  });
-  h+='</section>';
-  var L=d.levels||{};
-  if(L.p5)h+='<section class="card"><h2>Percentis de hoje (NQ)</h2><p class="note">P5 '+L.p5+' · P25 '+L.p25+' · P50 '+L.p50+' · P75 '+L.p75+' · P95 '+L.p95+'<br>Fecho de ontem '+d.prev+' · preço usado '+d.spot+'</p></section>';
-  h+='<p class="note">Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'. Ferramenta de leitura, não é aconselhamento financeiro.</p>';
-  document.getElementById('app').innerHTML=h;
-}).catch(function(){document.getElementById('app').innerHTML='<p class="note">Ainda não há dados. Corre o workflow no separador Actions.</p>'});
-  document.addEventListener('visibilitychange',function(){if(!document.hidden)location.reload()});
-window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
-setInterval(function(){if(!document.hidden)location.reload()},1800000);
-</script>
-</body>
-</html>
+  d.modules.forEach(function(m){h+='<div class="row"><span>'+m.name+'</span><div class="t"><span class="d" style="left:'+(50+m.score/2)+'%;background:'+col(m.score)+'"></span></div><output style="color:'+col(m.contrib)+'">'+sg(m.contrib)+'</output><small>'+esc(m.note)+'</small></div>'});
+  h+='</section>'+when(d);return h}
+
+/* ---------- VOL ---------- */
+function vVol(d){
+  if(!d)return none('vol.json');var c=d.cenario;
+  var h='<h1>Hoje vai mexer-se muito?</h1><section class="card"><p class="big">'+esc(d.label)+'</p><p class="sub">'+(c.p!=null?'Em cenários iguais a este o NQ teve um dia de expansão em '+c.p+'% das vezes (base: '+d.base_exp+'%), em '+c.n+' dias.':'Há poucos dias parecidos no histórico para dar um número.')+'</p></section>';
+  h+='<section class="card"><h2>Estado de hoje (dados até '+d.ref+')</h2>';
+  h+='<div class="kv"><span>Compressão (dias calmos recentes)</span><span>'+(d.estado.compressao?'sim':'não')+'</span></div>';
+  h+='<div class="kv"><span>Ontem foi dia de expansão</span><span>'+(d.estado.ontem_expansao?'sim':'não')+'</span></div>';
+  h+='<div class="kv"><span>VXN</span><span>'+d.vxn+' (percentil '+d.vxn_pct+'%, '+d.estado.vxn+')</span></div>';
+  h+='<div class="kv"><span>Range esperado nestes cenários (mediana)</span><span>'+(c.range_med!=null?c.range_med+'% ≈ '+d.range_pts+' pts':'–')+'</span></div>';
+  h+='<div class="kv"><span>Range mediano em qualquer dia</span><span>'+d.range_base+'%</span></div>';
+  h+='<div class="kv"><span>Movimento esperado pelo VXN (±1σ)</span><span>≈ '+d.sigma_pts+' pts</span></div></section>';
+  h+='<section class="card"><h2>Cada sinal, isolado</h2><table><tr><th>Condição</th><th>Expansão a seguir</th></tr>';
+  d.marginais.forEach(function(m){h+='<tr class="'+(m.ativo?'on':'')+'"><td>'+esc(m.cond)+(m.ativo?' (ativo hoje)':'')+'</td><td>'+pr(m)+'</td></tr>'});
+  h+='</table></section><p class="n">Expansão = range do dia ≥ 1,5x a média dos últimos 20 dias. [ ] = diferença face a todos os dias; * = mais de 2 erros-padrão. Não inclui calendário (FOMC, CPI, NFP, resultados): confirma à parte.</p>'+when(d);return h}
+
+/* ---------- AMD ---------- */
+function cell(c,t){if(!c)return '–';var v=c[t+'_vs'],s=v>0?'+':'';return c[t]+'% ['+s+v+(c[t+'_star']?' *':'')+']'}
+function dayAMD(d){
+  var h='<section class="card"><h2>'+d.nome+' '+d.data+' · '+d.status+'</h2>';
+  if(d.status==='fechado')return h+'<p style="margin:0">Foi um dia de <b>'+NM[d.tipo]+'</b>'+(d.lado?' ('+d.lado+')':'')+'.</p></section>';
+  if(d.status==='sem sessão')return h+'<p class="n" style="margin:0">Sem sessão.</p></section>';
+  var b=d.base,c=d.cond,top=null;
+  ['A','M','D','O'].forEach(function(t){var x=c?c[t]:b[t];if(top===null||x>top.v)top={t:t,v:x}});
+  h+='<p class="n">Contexto: '+esc(d.contexto)+(c?' (n='+c.n+')':' (poucos dias parecidos, só a base)')+'</p>';
+  h+='<table><tr><th>Tipo</th><th>Base (n='+b.n+')</th><th>Neste contexto [vs base]</th></tr>';
+  ['A','M','D','O'].forEach(function(t){h+='<tr class="'+(top.t===t?'on':'')+'"><td>'+NM[t]+'</td><td>'+b[t]+'%</td><td>'+cell(c,t)+'</td></tr>'});
+  h+='</table>';var x=c||b;
+  if(x.d_alta!=null||x.m_max!=null)h+='<p class="n">'+(x.d_alta!=null?'Em distribuição, '+x.d_alta+'% fecham em alta. ':'')+(x.m_max!=null?'Em manipulação, '+x.m_max+'% varrem o máximo do dia anterior.':'')+'</p>';
+  return h+'</section>'}
+function vAMD(d){
+  if(!d)return none('amd.json');
+  var h='<h1>Acumulação, manipulação ou distribuição?</h1><p class="n">Regras objetivas sobre o diário do NQ. Dados até '+d.ref+'.</p>';
+  h+='<section class="card"><h2>HTF (diário)</h2><p style="margin:0">Tendência: <b>'+d.htf+'</b>. Último dia fechado: <b>'+NM[d.ultimo_tipo]+'</b>'+(d.ultimo_lado?' ('+d.ultimo_lado+')':'')+'.</p></section>';
+  d.dias.forEach(function(x){h+=dayAMD(x)});
+  var l=d.ltf;
+  h+='<section class="card"><h2>LTF (hoje, intradiário)</h2>'+(l?'<p class="n">Ásia (00–06 UTC): '+l.asia_low+' – '+l.asia_high+'. Londres (06–12 UTC): '+l.lon_low+' – '+l.lon_high+'. Último: '+l.ultimo+'.</p><p style="margin:0">'+esc(l.leitura)+'</p>':'<p class="n" style="margin:0">Sem dados intradiários (fim de semana ou feriado).</p>')+'</section>';
+  h+='<p class="n">Definições aproximadas: Acumulação = dia dentro do range anterior ou com pouco range. Manipulação = varre o máximo/mínimo anterior e fecha de volta dentro. Distribuição = fecha fora do range anterior, range normal/grande, fecho perto de um extremo. Não há prova de que o padrão se repita.</p>'+when(d);return h}
+
+/* ---------- PLANO ---------- */
+var CHK=[
+ ['TDA (top-down)',['HTF AMD definido (alta ou baixa)','DOL principal identificada','LTF AMD identificado','OB de alta probabilidade (feito por manipulação, tira estrutura, boa reação)','Limit colocado; à espera do entry trigger / OB chain']],
+ ['Checklist final',['Bias HTF claro e narrativa do dia definida','Estrutura AMD percebida; estrutura clara tirada','Protegido / não protegido marcado, sempre com AMD presente','BOS visto nos ciclos AMD e IDM','Liquidez identificada; IDM + BOS + POI alinhados','OTE marcado (onde o mercado rejeita)','Entry trigger definido (SMT, order block) e VWAP tocado ou não','SVP/PVP: VAH e VAL rejeitam? o POC segura o preço?','Há SMT com o ES?','Atenção a fake IDM (só tirou o low e enganou)','Nunca operar no meio do range, sempre numa extremidade']]];
+var CHK_TOTAL=CHK.reduce(function(s,g){return s+g[1].length},0);
+function todayKey(){var d=new Date();return 'plano-'+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function loadPlan(){try{return JSON.parse(localStorage.getItem(todayKey()))||{c:{}}}catch(e){return {c:{}}}}
+function savePlan(p){try{localStorage.setItem(todayKey(),JSON.stringify(p))}catch(e){}}
+function vPlano(b){
+  var p=loadPlan();p.c=p.c||{};
+  var done=Object.keys(p.c).filter(function(k){return p.c[k]}).length;
+  var h='<h1>Plano de hoje</h1><p class="n">'+new Date().toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long'})+'. Fica guardado neste browser; para o Notion usa "Copiar resumo".</p>';
+  h+='<section class="card"><h2>A tua leitura</h2><label>O meu bias</label><div class="btns" id="bb">';
+  ['Alta','Baixa','Neutro'].forEach(function(x){h+='<button data-b="'+x+'" class="'+(p.bias===x?'sel '+(x==='Alta'?'go':x==='Baixa'?'no':''):'')+'">'+x+'</button>'});
+  h+='</div>'+(b?'<p class="n">Painel: '+b.label+' ('+sg(b.total)+')</p>':'')+
+   '<label>DOL principal</label><input type="text" id="dol" style="width:100%" value="'+esc(p.dol||'')+'" placeholder="ex.: PDL, EQL, OB 4H…">'+
+   '<label>O que quero que aconteça</label><textarea id="que">'+esc(p.que||'')+'</textarea>'+
+   '<label>Notas / POI (OB, IDM, BOS)</label><textarea id="nota">'+esc(p.nota||'')+'</textarea></section>';
+  h+='<section class="card"><h2>Checklist · <span id="cnt">'+done+' / '+CHK_TOTAL+'</span></h2><div class="bar"><i id="pb" style="width:'+(done/CHK_TOTAL*100)+'%"></i></div>';
+  CHK.forEach(function(g,gi){h+='<p class="n" style="margin:12px 0 2px"><b>'+g[0]+'</b></p>';g[1].forEach(function(t,i){var k=gi+'-'+i;h+='<label class="chk'+(p.c[k]?' done':'')+'" style="margin:0;color:var(--tx);font-size:15px"><input type="checkbox" data-k="'+k+'"'+(p.c[k]?' checked':'')+'><span>'+t+'</span></label>'})});
+  h+='</section><section class="card warn"><h2>Decisão de hoje</h2><div class="btns" id="dd"><button data-d="TRADE" class="'+(p.dec==='TRADE'?'sel go':'')+'">TRADE</button><button data-d="NO TRADE" class="'+(p.dec==='NO TRADE'?'sel no':'')+'">NO TRADE</button></div><p class="n">A decisão é tua. Se a checklist não está completa ou o preço está no meio do range, a tua própria regra diz NO TRADE.</p><p><button id="cp">Copiar resumo</button> <span class="n" id="ok"></span></p></section>';
+  setTimeout(function(){
+    function upd(){savePlan(p);var n=Object.keys(p.c).filter(function(k){return p.c[k]}).length;var e=document.getElementById('cnt');if(e){e.textContent=n+' / '+CHK_TOTAL;document.getElementById('pb').style.width=(n/CHK_TOTAL*100)+'%'}}
+    document.querySelectorAll('input[data-k]').forEach(function(el){el.onchange=function(){p.c[el.dataset.k]=el.checked;el.parentNode.classList.toggle('done',el.checked);upd()}});
+    document.querySelectorAll('#bb button').forEach(function(el){el.onclick=function(){p.bias=el.dataset.b;upd();route()}});
+    document.querySelectorAll('#dd button').forEach(function(el){el.onclick=function(){p.dec=el.dataset.d;upd();route()}});
+    ['dol','que','nota'].forEach(function(id){var e=document.getElementById(id);e.oninput=function(){p[id]=e.value;upd()}});
+    document.getElementById('cp').onclick=function(){
+      var n=Object.keys(p.c).filter(function(k){return p.c[k]}).length;
+      var t='Plano '+new Date().toLocaleDateString('pt-PT')+'\nO meu bias: '+(p.bias||'-')+(b?' (painel: '+b.label+' '+sg(b.total)+')':'')+'\nDOL: '+(p.dol||'-')+'\nO que quero que aconteça: '+(p.que||'-')+'\nNotas: '+(p.nota||'-')+'\nChecklist: '+n+'/'+CHK_TOTAL+'\nDecisão: '+(p.dec||'-');
+      (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){document.getElementById('ok').textContent='copiado'}).catch(function(){document.getElementById('ok').textContent='não deu para copiar'})}
+  },0);
+  return h}
+
+/* ---------- TESTES ---------- */
+function ab(b){if(!b||b.win==null)return '<span class="n">n='+(b?b.n:0)+' (pouco)</span>';var s=b.vs_base>0?'+':'';return b.win+'% (n='+b.n+') ['+s+b.vs_base+(Math.abs(b.vs_base)>2*b.se?' *':'')+']'}
+function vTestes(a,e,bt){
+  var h='<h1>Testes: o bias e os sinais valem alguma coisa?</h1><p class="n">Resumo honesto: o bias de direção não mostrou vantagem provada (nada passou de 2 erros-padrão e os resultados trocam entre metades do histórico). [ ] = diferença face ao acaso; * = mais de 2 erros-padrão.</p>';
+  if(bt){h+='<section class="card"><h2>Backtest ('+bt.inicio+' a '+bt.fim+')</h2><p class="n">Base: sobe no dia seguinte em '+bt.tudo.base.sobe_pct+'% dos dias.</p><table><tr><th>Score</th><th>Dias</th><th>Subiu depois (%)</th></tr>';
+    bt.tudo.faixas.forEach(function(f){h+='<tr><td>'+f.faixa+'</td><td>'+f.dias+'</td><td>'+f.sobe_pct+'</td></tr>'});h+='</table></section>'}
+  if(a){var cp=a.tudo.completo;h+='<section class="card"><h2>Ablação ('+a.tudo.dias+' dias)</h2><p class="n">Completo → bull '+ab(cp.bull)+' | bear '+ab(cp.bear)+'</p><table><tr><th>Módulo</th><th>Só ele: bull</th><th>Só ele: bear</th><th>Sem ele</th></tr>';
+    a.tudo.modulos.forEach(function(m){if(!m.testavel){h+='<tr><td>'+m.nome+'</td><td colspan="3" class="n">sem dados</td></tr>';return}h+='<tr><td>'+m.nome+'</td><td>'+ab(m.so.bull)+'</td><td>'+ab(m.so.bear)+'</td><td>'+ab(m.sem.comb)+'</td></tr>'});h+='</table></section>'}
+  if(e){h+='<section class="card"><h2>Expansão (base '+e.tudo.base_exp+'%)</h2><table><tr><th>Condição hoje</th><th>Expansão amanhã</th></tr>';
+    e.tudo.linhas.forEach(function(l){h+='<tr><td>'+esc(l.cond)+'</td><td>'+pr(l.exp)+'</td></tr>'});h+='</table></section>'}
+  if(!a&&!e&&!bt)h+=none('backtest/ablation/expansion');
+  return h+'<p class="n">Páginas completas: <a class="lnk" href="backtest.html">backtest</a> · <a class="lnk" href="ablation.html">ablação</a> · <a class="lnk" href="expansion.html">expansão</a>.</p>'}
+
+/* ---------- ROUTER ---------- */
+var cache={};
+function get(k,u){if(cache[k]&&Date.now()-cache[k].t<60000)return Promise.resolve(cache[k].v);return J(u).then(function(v){cache[k]={t:Date.now(),v:v};return v})}
+function route(){
+  var r=(location.hash||'#hoje').slice(1);if(!TABS.some(function(t){return t[0]===r}))r='hoje';
+  document.getElementById('nav').innerHTML=TABS.map(function(t){return '<a href="#'+t[0]+'" class="'+(t[0]===r?'on':'')+'">'+t[1]+'</a>'}).join('');
+  var app=document.getElementById('app');
+  var P=function(a){return Promise.all(a)};
+  var out;
+  if(r==='hoje')out=P([get('b','data.json'),get('v','vol.json'),get('a','amd.json')]).then(function(x){return vHoje(x[0],x[1],x[2])});
+  else if(r==='bias')out=get('b','data.json').then(vBias);
+  else if(r==='vol')out=get('v','vol.json').then(vVol);
+  else if(r==='amd')out=get('a','amd.json').then(vAMD);
+  else if(r==='plano')out=get('b','data.json').then(vPlano);
+  else out=P([get('ab','ablation.json'),get('ex','expansion.json'),get('bt','backtest.json')]).then(function(x){return vTestes(x[0],x[1],x[2])});
+  out.then(function(h){app.innerHTML=h;window.scrollTo(0,0)}).catch(function(e){app.innerHTML='<p class="n">Erro a mostrar esta página.</p>'})}
+window.addEventListener('hashchange',route);
+document.addEventListener('visibilitychange',function(){if(!document.hidden){cache={};if((location.hash||'#hoje')!=='#plano')route()}});
+route();
+</script></body></html>
