@@ -16,7 +16,7 @@ main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
 .card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
 h1{font-size:22px;margin:0 0 4px;font-weight:600}
 .n{color:var(--mut);font-size:13px}
-textarea{width:100%;min-height:260px;font:13px/1.45 ui-monospace,Menlo,monospace;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:10px}
+textarea{width:100%;min-height:200px;font:13px/1.45 ui-monospace,Menlo,monospace;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:10px}
 button{font:inherit;font-weight:600;color:#000;background:var(--hi);border:0;border-radius:10px;padding:10px 18px;cursor:pointer}
 table{border-collapse:collapse;width:100%;font-size:14px}
 td{padding:6px 8px;border-top:1px solid var(--line)}td:last-child{text-align:right;font-variant-numeric:tabular-nums}
@@ -29,9 +29,10 @@ function J(u){return fetch(u+'?'+Date.now()).then(function(r){if(!r.ok)throw 0;r
 function T(u){return fetch(u+'?'+Date.now()).then(function(r){if(!r.ok)throw 0;return r.text()}).catch(function(){return null})}
 Promise.all([J('tv_levels.json'),T('tv_levels.txt')]).then(function(x){
   var d=x[0],t=x[1],app=document.getElementById('app');
+  if(t)t=t.trim().split(/\r?\n/).join(';');
   if(!d||!t){app.innerHTML='<h1>TradingView</h1><section class="card"><p class="n">Ainda não há dados. Corre o workflow "TV niveis" em Actions (Run workflow).</p></section>';return}
   var h='<h1>Níveis para o TradingView</h1><p class="n">Gamma (QQQ→NQ) e volume profile de 30 e 90 dias (VAH, POC, VAL). Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'.</p>';
-  h+='<section class="card"><p><button id="cp">Copiar tudo</button> <span class="n" id="ok"></span></p><textarea id="tx" readonly>'+t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</textarea><p class="n">No TradingView: indicador "Níveis" → Definições → Inputs → cola na caixa de texto.</p></section>';
+  h+='<section class="card"><p><button id="cp">Copiar tudo</button> <span class="n" id="ok"></span></p><textarea id="tx" readonly>'+t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</textarea><p class="n">Texto numa só linha. No TradingView: indicador "Níveis" → Definições → Inputs → cola na caixa de texto.</p></section>';
   h+='<section class="card"><table>'+d.levels.map(function(l){return '<tr><td>'+l.name+'</td><td>'+l.price.toLocaleString('pt-PT',{minimumFractionDigits:2})+'</td></tr>'}).join('')+'</table></section>';
   app.innerHTML=h;
   document.getElementById('cp').onclick=function(){var e=document.getElementById('tx');e.select();
