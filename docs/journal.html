@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NQ Hub · Journal</title>
+<style>
+:root{--bg:#0d1014;--surf:#151a21;--surf2:#1b212a;--line:#252c37;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429;--bull:#2fbf71;--bear:#e5484d}
+@media (prefers-color-scheme:light){:root{--bg:#f3f4f7;--surf:#fff;--surf2:#f6f7f9;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f;--bull:#168a4f;--bear:#cc2f34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{max-width:980px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.logo{font-weight:700;font-size:17px}.logo span{color:var(--hi)}.goal{color:var(--mut);font-size:13px}
+nav{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto}
+nav a{padding:8px 14px;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a.on{color:var(--tx);border-color:var(--hi);font-weight:600}
+main{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 4px;font-weight:600}
+h2{font-size:13px;margin:0 0 10px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.n{color:var(--mut);font-size:13px}
+.up{color:var(--bull)}.dn{color:var(--bear)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--surf2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:20px;letter-spacing:-.01em}.stat span{font-size:12px;color:var(--mut)}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mh b{font-size:17px;text-transform:capitalize}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dow{font-size:12px;color:var(--mut);text-align:center;padding:2px 0}
+.day{min-height:72px;border:1px solid var(--line);border-radius:10px;padding:6px 7px;background:var(--surf2);cursor:pointer;overflow:hidden}
+.day.empty{background:transparent;border:0;cursor:default}
+.day.sel{outline:2px solid var(--hi)}
+.day.today .dn1{color:var(--hi);font-weight:700}
+.day .dn1{font-size:12px;color:var(--mut)}
+.day .p{font-weight:700;font-size:13px;margin-top:4px}
+.day .m{font-size:11px;color:var(--mut)}
+.day.win{background:rgba(47,191,113,.14);border-color:rgba(47,191,113,.4)}
+.day.loss{background:rgba(229,72,77,.14);border-color:rgba(229,72,77,.4)}
+.day.we{opacity:.55}
+button,select,textarea,input{font:inherit;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+button{cursor:pointer;font-weight:600}
+button.pri{background:var(--hi);border-color:var(--hi);color:#000}
+button.dg{color:var(--bear)}button.sm{padding:4px 10px;font-size:13px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+label{display:block;font-size:12px;color:var(--mut);margin:0 0 3px}
+textarea{width:100%;min-height:70px;resize:vertical}input,select{width:100%}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--hi);padding:0}
+.chk{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line);cursor:pointer;align-items:flex-start;color:var(--tx);font-size:14px;margin:0}
+.chk.done span{color:var(--mut);text-decoration:line-through}
+.bar{height:8px;background:var(--surf2);border-radius:99px;overflow:hidden;border:1px solid var(--line);margin:6px 0}
+.bar i{display:block;height:100%;background:var(--hi)}
+.tr{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--surf2)}
+.tr .hd{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12px;color:var(--mut);margin-right:4px}
+.ph{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ph img{width:96px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in}
+.ph .w{position:relative}.ph .x{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:6px;padding:0 6px;font-size:12px}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out}
+#lb img{max-width:96vw;max-height:94vh;border-radius:8px}
+svg{display:block;width:100%;height:90px}
+@media(max-width:560px){.day{min-height:58px;padding:4px}.day .m{display:none}.day .p{font-size:11px}}
+</style></head><body>
+<header><div class="top"><div class="logo">NQ <span>Hub</span></div><div class="goal">10K até fevereiro · disciplina, plano e journal</div></div>
+<nav><a href="index.html#hoje">Hoje</a><a href="index.html#bias">Bias</a><a href="index.html#vol">Volatilidade</a><a href="index.html#amd">AMD</a><a href="index.html#plano">Plano</a><a href="index.html#testes">Testes</a><a class="on" href="journal.html">Journal</a></nav></header>
+<main id="app"></main><div id="lb"><img id="lbi"></div>
+<script>
+var CHK=[['TDA (top-down)',['HTF AMD definido (alta ou baixa)','DOL principal identificada','LTF AMD identificado','OB de alta probabilidade (feito por manipulação, tira estrutura, boa reação)','Limit colocado; à espera do entry trigger / OB chain']],['Checklist final',['Bias HTF claro e narrativa do dia definida','Estrutura AMD percebida; estrutura clara tirada','Protegido / não protegido marcado, sempre com AMD presente','BOS visto nos ciclos AMD e IDM','Liquidez identificada; IDM + BOS + POI alinhados','OTE marcado (onde o mercado rejeita)','Entry trigger definido (SMT, order block) e VWAP tocado ou não','SVP/PVP: VAH e VAL rejeitam? o POC segura o preço?','Há SMT com o ES?','Atenção a fake IDM (só tirou o low e enganou)','Nunca operar no meio do range, sempre numa extremidade']]];
+var CT=CHK.reduce(function(s,g){return s+g[1].length},0);
+var GR=['A+','A','B+','B','C'],TF=['Diário','4H','1H','15m','5m','3m','1m'];
+var MONTHS=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+var now=new Date(),S={y:now.getFullYear(),m:now.getMonth(),sel:null,edit:null};
+/* ---- dados ---- */
+function load(){try{return JSON.parse(localStorage.getItem('nqj'))||{days:{}}}catch(e){return {days:{}}}}
+var D=load();function save(){try{localStorage.setItem('nqj',JSON.stringify(D))}catch(e){alert('Sem espaço para guardar.')}}
+function dk(y,m,d){return y+'-'+('0'+(m+1)).slice(-2)+'-'+('0'+d).slice(-2)}
+function pk(k){var a=k.split('-');return 'plano-'+a[0]+'-'+(+a[1])+'-'+(+a[2])}
+function plan(k){try{return JSON.parse(localStorage.getItem(pk(k)))||{c:{}}}catch(e){return {c:{}}}}
+function savePlan(k,p){try{localStorage.setItem(pk(k),JSON.stringify(p))}catch(e){}}
+function day(k){return D.days[k]||(D.days[k]={trades:[],photos:[],review:''})}
+function dpnl(k){var x=D.days[k];return x?x.trades.reduce(function(s,t){return s+(+t.pnl||0)},0):0}
+function hasT(k){var x=D.days[k];return x&&x.trades.length>0}
+function money(v){return (v>0?'+':v<0?'−':'')+'$'+Math.abs(Math.round(v*100)/100).toLocaleString('pt-PT')}
+function cls(v){return v>0?'up':v<0?'dn':''}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+/* ---- fotos (IndexedDB) ---- */
+var DBP=new Promise(function(res,rej){try{var q=indexedDB.open('nqj-photos',1);q.onupgradeneeded=function(){q.result.createObjectStore('p')};q.onsuccess=function(){res(q.result)};q.onerror=function(){rej()}}catch(e){rej()}});
+function dbp(mode,fn){return DBP.then(function(db){return new Promise(function(res,rej){var t=db.transaction('p',mode),r=fn(t.objectStore('p'));t.oncomplete=function(){res(r&&r.result)};t.onerror=function(){rej()}})})}
+function shrink(f){return new Promise(function(res){var im=new Image(),u=URL.createObjectURL(f);im.onload=function(){var s=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(function(b){URL.revokeObjectURL(u);res(b||f)},'image/jpeg',.82)};im.onerror=function(){res(f)};im.src=u})}
+function addPhotos(files){return Promise.all(Array.prototype.map.call(files,function(f){var id=uid();return shrink(f).then(function(b){return dbp('readwrite',function(s){return s.put(b,id)})}).then(function(){return id})}))}
+function fillImgs(){document.querySelectorAll('img[data-p]').forEach(function(im){if(im.src)return;dbp('readonly',function(s){return s.get(im.dataset.p)}).then(function(b){if(b)im.src=URL.createObjectURL(b)})})}
+function delPhoto(id){return dbp('readwrite',function(s){return s.delete(id)})}
+function phHtml(ids,own){return '<div class="ph">'+(ids||[]).map(function(id){return '<div class="w"><img data-p="'+id+'" alt="">'+(own?'<button class="x" data-delph="'+id+'" data-own="'+own+'">×</button>':'')+'</div>'}).join('')+'</div>'}
+/* ---- calendário ---- */
+function monthStats(){
+  var keys=Object.keys(D.days).filter(function(k){return k.indexOf(S.y+'-'+('0'+(S.m+1)).slice(-2))===0&&hasT(k)}).sort();
+  var tot=0,nt=0,w=0,best=null,worst=null,gd=0,cum=0,pts=[0];
+  keys.forEach(function(k){var p=dpnl(k);tot+=p;cum+=p;pts.push(cum);if(p>0)gd++;if(best===null||p>best)best=p;if(worst===null||p<worst)worst=p;D.days[k].trades.forEach(function(t){nt++;if(+t.pnl>0)w++})});
+  return {tot:tot,days:keys.length,gd:gd,nt:nt,w:w,best:best,worst:worst,pts:pts}}
+function spark(pts){if(pts.length<2)return '';var mn=Math.min.apply(0,pts),mx=Math.max.apply(0,pts),r=(mx-mn)||1;
+  var p=pts.map(function(v,i){return (i/(pts.length-1)*300).toFixed(1)+','+(80-(v-mn)/r*70).toFixed(1)}).join(' ');
+  var z=80-(0-mn)/r*70;return '<svg viewBox="0 0 300 90" preserveAspectRatio="none"><line x1="0" x2="300" y1="'+z+'" y2="'+z+'" stroke="var(--line)" stroke-dasharray="3"/><polyline fill="none" stroke="var(--hi)" stroke-width="2" points="'+p+'"/></svg>'}
+function vCal(){
+  var st=monthStats(),first=new Date(S.y,S.m,1),off=(first.getDay()+6)%7,nd=new Date(S.y,S.m+1,0).getDate(),tk=dk(now.getFullYear(),now.getMonth(),now.getDate());
+  var h='<h1>Journal</h1><p class="n">Clica num dia para ver o PnL, as trades, as fotos e a checklist.</p><section class="card"><div class="stats">'+
+   '<div class="stat"><b class="'+cls(st.tot)+'">'+money(st.tot)+'</b><span>PnL do mês</span></div>'+
+   '<div class="stat"><b>'+st.days+'</b><span>dias com trades'+(st.days?' ('+Math.round(st.gd/st.days*100)+'% verdes)':'')+'</span></div>'+
+   '<div class="stat"><b>'+st.nt+'</b><span>trades'+(st.nt?' ('+Math.round(st.w/st.nt*100)+'% ganhas)':'')+'</span></div>'+
+   '<div class="stat"><b class="up">'+(st.best==null?'–':money(st.best))+'</b><span>melhor dia</span></div>'+
+   '<div class="stat"><b class="dn">'+(st.worst==null?'–':money(st.worst))+'</b><span>pior dia</span></div></div>'+spark(st.pts)+'</section>';
+  h+='<section class="card"><div class="mh"><button id="pv">←</button><b>'+MONTHS[S.m]+' '+S.y+'</b><button id="nx">→</button></div><div class="cal">';
+  ['seg','ter','qua','qui','sex','sáb','dom'].forEach(function(x){h+='<div class="dow">'+x+'</div>'});
+  for(var i=0;i<off;i++)h+='<div class="day empty"></div>';
+  for(var d=1;d<=nd;d++){var k=dk(S.y,S.m,d),t=hasT(k),p=dpnl(k),wd=new Date(S.y,S.m,d).getDay(),pl=plan(k),done=Object.keys(pl.c||{}).filter(function(z){return pl.c[z]}).length;
+    h+='<div class="day'+(t?(p>0?' win':p<0?' loss':''):'')+(S.sel===k?' sel':'')+(k===tk?' today':'')+(wd===0||wd===6?' we':'')+'" data-k="'+k+'"><div class="dn1">'+d+'</div>'+(t?'<div class="p '+cls(p)+'">'+money(p)+'</div><div class="m">'+D.days[k].trades.length+' trade(s)</div>':(done?'<div class="m">checklist '+done+'/'+CT+'</div>':''))+'</div>'}
+  return h+'</div></section>'}
+/* ---- dia ---- */
+function vTrade(t,k){
+  var p=+t.pnl||0;
+  return '<div class="tr"><div class="hd"><div><b>'+esc(t.hora||'')+' '+esc(t.dir||'')+'</b> '+(t.qty?esc(t.qty)+' '+esc(t.inst||'')+' ':'')+(t.entry?'· '+esc(t.entry)+' → '+esc(t.exit):'')+'<br>'+(t.grade?'<span class="tag">Qualidade '+esc(t.grade)+'</span>':'')+(t.tf?'<span class="tag">POI '+esc(t.tf)+'</span>':'')+'</div><div><b class="'+cls(p)+'" style="font-size:18px">'+money(p)+'</b> <button class="sm" data-et="'+t.id+'">editar</button></div></div>'+(t.setup?'<p style="margin:8px 0 0"><b>Setup:</b> '+esc(t.setup)+'</p>':'')+(t.notes?'<p style="margin:6px 0 0" class="n">'+esc(t.notes)+'</p>':'')+phHtml(t.photos,0)+'</div>'}
+function fTrade(t){
+  var o=function(a,v){return a.map(function(x){return '<option'+(x===v?' selected':'')+'>'+x+'</option>'}).join('')};
+  return '<div class="tr" id="tf"><div class="f">'+
+   '<div><label>Hora</label><input id="f_hora" type="time" value="'+esc(t.hora)+'"></div>'+
+   '<div><label>Direção</label><select id="f_dir">'+o(['Long','Short'],t.dir||'Long')+'</select></div>'+
+   '<div><label>Instrumento</label><select id="f_inst">'+o(['NQ','MNQ'],t.inst||'NQ')+'</select></div>'+
+   '<div><label>Contratos</label><input id="f_qty" type="number" step="1" value="'+esc(t.qty)+'"></div>'+
+   '<div><label>Entrada</label><input id="f_entry" type="number" step="0.25" value="'+esc(t.entry)+'"></div>'+
+   '<div><label>Saída</label><input id="f_exit" type="number" step="0.25" value="'+esc(t.exit)+'"></div>'+
+   '<div><label>PnL ($) – calcula sozinho, podes mudar</label><input id="f_pnl" type="number" step="0.01" value="'+esc(t.pnl)+'"></div>'+
+   '<div><label>Qualidade</label><select id="f_grade"><option value="">–</option>'+o(GR,t.grade)+'</select></div>'+
+   '<div><label>TF do POI</label><select id="f_tf"><option value="">–</option>'+o(TF,t.tf)+'</select></div></div>'+
+   '<label style="margin-top:10px">Setup (OB, IDM, BOS, trigger…)</label><input id="f_setup" type="text" value="'+esc(t.setup)+'">'+
+   '<label style="margin-top:10px">Notas (o que correu bem / mal)</label><textarea id="f_notes">'+esc(t.notes)+'</textarea>'+
+   '<label style="margin-top:10px">Fotos da trade</label><input id="f_ph" type="file" accept="image/*" multiple>'+phHtml(t.photos,'t')+
+   '<div class="btns" style="margin-top:12px"><button class="pri" id="ts">Guardar trade</button><button id="tc">Cancelar</button>'+(t.id&&D.days[S.sel]&&D.days[S.sel].trades.some(function(x){return x.id===t.id})?'<button class="dg" id="td">Apagar</button>':'')+'</div></div>'}
+function vDay(){
+  var k=S.sel;if(!k)return '';var x=day(k),pl=plan(k),p=dpnl(k),dt=new Date(k+'T12:00:00');
+  var done=Object.keys(pl.c||{}).filter(function(z){return pl.c[z]}).length;
+  var h='<section class="card" id="dia"><div class="mh"><div><b style="text-transform:capitalize">'+dt.toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</b><br><span class="n">'+x.trades.length+' trade(s)</span></div><div style="text-align:right"><b class="'+cls(p)+'" style="font-size:26px">'+money(p)+'</b><br><button class="sm" id="cl">fechar</button></div></div></section>';
+  h+='<section class="card"><h2>Plano do dia</h2><div class="f"><div><label>O meu bias</label><select id="p_bias"><option value="">–</option>'+['Alta','Baixa','Neutro'].map(function(v){return '<option'+(pl.bias===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>'+
+   '<div><label>Decisão</label><select id="p_dec"><option value="">–</option>'+['TRADE','NO TRADE'].map(function(v){return '<option'+(pl.dec===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>'+
+   '<div><label>DOL principal</label><input id="p_dol" type="text" value="'+esc(pl.dol)+'"></div></div>'+
+   '<label style="margin-top:10px">O que queria que acontecesse</label><textarea id="p_que">'+esc(pl.que)+'</textarea>'+
+   '<details style="margin-top:10px"><summary style="cursor:pointer"><b>Checklist '+done+' / '+CT+'</b></summary><div class="bar"><i style="width:'+(done/CT*100)+'%"></i></div>';
+  CHK.forEach(function(g,gi){h+='<p class="n" style="margin:10px 0 2px"><b>'+g[0]+'</b></p>';g[1].forEach(function(t,i){var c=gi+'-'+i;h+='<label class="chk'+(pl.c[c]?' done':'')+'"><input type="checkbox" data-c="'+c+'"'+(pl.c[c]?' checked':'')+'><span>'+t+'</span></label>'})});
+  h+='</details></section><section class="card"><div class="mh"><h2 style="margin:0">Trades</h2><button class="pri sm" id="nt">+ Nova trade</button></div>';
+  if(S.edit&&!x.trades.some(function(z){return z.id===S.edit}))h+=fTrade(TMP||{id:S.edit,photos:[]});
+  x.trades.forEach(function(t){h+=S.edit===t.id?fTrade(TMP&&TMP.id===t.id?TMP:t):vTrade(t,k)});
+  if(!x.trades.length&&!S.edit)h+='<p class="n">Sem trades neste dia. Se não operaste, deixa assim e escreve a revisão abaixo.</p>';
+  h+='</section><section class="card"><h2>Fotos do dia</h2><input id="dph" type="file" accept="image/*" multiple>'+phHtml(x.photos,'d')+'<label style="margin-top:14px">Revisão do dia (o que fiz bem, o que errei, lição)</label><textarea id="rev">'+esc(x.review)+'</textarea></section>';
+  return h}
+/* ---- render / eventos ---- */
+function render(){
+  var y=window.scrollY;document.getElementById('app').innerHTML=vCal()+vDay()+'<section class="card"><h2>Cópia de segurança</h2><p class="n">Os dados ficam guardados neste browser e neste dispositivo. Exporta de vez em quando para não os perderes.</p><div class="btns"><button id="ex">Exportar</button><label class="btns" style="margin:0"><span class="n">Importar:</span><input id="im" type="file" accept=".json" style="width:auto"></label></div></section>';
+  fillImgs();window.scrollTo(0,y);wire()}
+function g(id){return document.getElementById(id)}
+function val(id){var e=g(id);return e?e.value:''}
+function calc(){var a=+val('f_entry'),b=+val('f_exit'),q=+val('f_qty');if(!a||!b||!q)return;var pts=val('f_dir')==='Long'?b-a:a-b;g('f_pnl').value=(Math.round(pts*q*(val('f_inst')==='MNQ'?2:20)*100)/100)}
+function wire(){
+  g('pv').onclick=function(){S.m--;if(S.m<0){S.m=11;S.y--}render()};
+  g('nx').onclick=function(){S.m++;if(S.m>11){S.m=0;S.y++}render()};
+  document.querySelectorAll('.day[data-k]').forEach(function(e){e.onclick=function(){S.sel=e.dataset.k;S.edit=null;TMP=null;render();var d=g('dia');if(d)d.scrollIntoView({behavior:'smooth'})}});
+  document.querySelectorAll('img[data-p]').forEach(function(im){im.onclick=function(){g('lbi').src=im.src;g('lb').style.display='flex'}});
+  g('lb').onclick=function(){g('lb').style.display='none'};
+  g('ex').onclick=doExport;g('im').onchange=doImport;
+  if(!S.sel)return;var k=S.sel,x=day(k),pl=plan(k);
+  g('cl').onclick=function(){S.sel=null;S.edit=null;render()};
+  [['p_bias','bias'],['p_dec','dec'],['p_dol','dol'],['p_que','que']].forEach(function(a){g(a[0]).onchange=function(){var p=plan(k);p.c=p.c||{};p[a[1]]=g(a[0]).value;savePlan(k,p)}});
+  document.querySelectorAll('input[data-c]').forEach(function(e){e.onchange=function(){var p=plan(k);p.c=p.c||{};p.c[e.dataset.c]=e.checked;savePlan(k,p);e.parentNode.classList.toggle('done',e.checked);var n=Object.keys(p.c).filter(function(z){return p.c[z]}).length;e.closest('details').querySelector('summary b').textContent='Checklist '+n+' / '+CT;e.closest('details').querySelector('.bar i').style.width=(n/CT*100)+'%'}});
+  g('nt').onclick=function(){TMP={id:uid(),photos:[]};S.edit=TMP.id;render();var f=g('tf');if(f)f.scrollIntoView({behavior:'smooth'})};
+  document.querySelectorAll('[data-et]').forEach(function(e){e.onclick=function(){S.edit=e.dataset.et;render()}});
+  g('rev').onchange=function(){x.review=g('rev').value;save()};
+  g('dph').onchange=function(){addPhotos(g('dph').files).then(function(ids){x.photos=(x.photos||[]).concat(ids);save();render()})};
+  document.querySelectorAll('[data-delph]').forEach(function(e){e.onclick=function(ev){ev.stopPropagation();var id=e.dataset.delph;if(!confirm('Apagar esta foto?'))return;
+    if(e.dataset.own==='d'){x.photos=x.photos.filter(function(z){return z!==id});delPhoto(id);save();render()}else{TMP.photos=(TMP.photos||[]).filter(function(z){return z!==id});delPhoto(id);render()}}});
+  if(S.edit){
+    if(!TMP||TMP.id!==S.edit){var t0=x.trades.filter(function(z){return z.id===S.edit})[0];TMP=t0?JSON.parse(JSON.stringify(t0)):{id:S.edit,photos:[]}}
+    ['f_entry','f_exit','f_qty','f_dir','f_inst'].forEach(function(i){g(i).oninput=g(i).onchange=calc});
+    g('tc').onclick=function(){S.edit=null;TMP=null;render()};
+    var td=g('td');if(td)td.onclick=function(){if(!confirm('Apagar a trade?'))return;x.trades=x.trades.filter(function(z){return z.id!==TMP.id});save();S.edit=null;TMP=null;render()};
+    g('ts').onclick=function(){
+      addPhotos(g('f_ph').files).then(function(ids){
+        var o={id:TMP.id,hora:val('f_hora'),dir:val('f_dir'),inst:val('f_inst'),qty:val('f_qty'),entry:val('f_entry'),exit:val('f_exit'),pnl:val('f_pnl')||0,grade:val('f_grade'),tf:val('f_tf'),setup:val('f_setup'),notes:val('f_notes'),photos:(TMP.photos||[]).concat(ids)};
+        var i=x.trades.findIndex(function(z){return z.id===o.id});if(i>=0)x.trades[i]=o;else x.trades.push(o);
+        x.trades.sort(function(a,b){return (a.hora||'').localeCompare(b.hora||'')});save();S.edit=null;TMP=null;render()})}}
+}
+var TMP=null;
+/* ---- backup ---- */
+function blobToData(b){return new Promise(function(r){var f=new FileReader();f.onload=function(){r(f.result)};f.readAsDataURL(b)})}
+function doExport(){
+  var ids=[];Object.keys(D.days).forEach(function(k){var x=D.days[k];ids=ids.concat(x.photos||[]);x.trades.forEach(function(t){ids=ids.concat(t.photos||[])})});
+  var plans={};for(var i=0;i<localStorage.length;i++){var key=localStorage.key(i);if(key.indexOf('plano-')===0)plans[key]=localStorage.getItem(key)}
+  Promise.all(ids.map(function(id){return dbp('readonly',function(s){return s.get(id)}).then(function(b){return b?blobToData(b).then(function(d){return [id,d]}):null})})).then(function(ph){
+    var o={v:1,days:D.days,plans:plans,photos:ph.filter(Boolean)};var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));a.download='nq-journal-'+new Date().toISOString().slice(0,10)+'.json';a.click()})}
+function doImport(){
+  var f=g('im').files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{var o=JSON.parse(r.result);if(!confirm('Isto junta os dados do ficheiro aos que já tens. Continuar?'))return;
+    Object.keys(o.days||{}).forEach(function(k){D.days[k]=o.days[k]});save();
+    Object.keys(o.plans||{}).forEach(function(k){localStorage.setItem(k,o.plans[k])});
+    Promise.all((o.photos||[]).map(function(p){return fetch(p[1]).then(function(r){return r.blob()}).then(function(b){return dbp('readwrite',function(s){return s.put(b,p[0])})})})).then(render)}catch(e){alert('Ficheiro inválido.')}};
+  r.readAsText(f)}
+render();
+</script></body></html>
