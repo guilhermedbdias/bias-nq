@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NQ Hub</title>
+<title>NQ Hub · Journal</title>
 <style>
 :root{--bg:#0d1014;--surf:#151a21;--surf2:#1b212a;--line:#252c37;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429;--bull:#2fbf71;--bear:#e5484d}
 @media (prefers-color-scheme:light){:root{--bg:#f3f4f7;--surf:#fff;--surf2:#f6f7f9;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f;--bull:#168a4f;--bear:#cc2f34}}
@@ -8,202 +8,199 @@
 body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,sans-serif}
 header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .top{max-width:980px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.logo{font-weight:700;letter-spacing:-.01em;font-size:17px}.logo span{color:var(--hi)}
-.goal{color:var(--mut);font-size:13px}
+.logo{font-weight:700;font-size:17px}.logo span{color:var(--hi)}.goal{color:var(--mut);font-size:13px}
 nav{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto}
-nav a{padding:8px 14px;border-radius:10px 10px 0 0;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a{padding:8px 14px;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
 nav a.on{color:var(--tx);border-color:var(--hi);font-weight:600}
-main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:14px}
-.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;overflow-x:auto}
-.grid .card{margin:0}
-h1{font-size:22px;margin:0 0 4px;font-weight:600;letter-spacing:-.01em}
+main{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 4px;font-weight:600}
 h2{font-size:13px;margin:0 0 10px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
-.big{font-size:34px;font-weight:600;margin:2px 0;letter-spacing:-.02em}
-.n{color:var(--mut);font-size:13px}.sub{color:var(--mut);margin:4px 0 10px}
-.meter{position:relative;height:10px;border-radius:99px;background:var(--surf2);border:1px solid var(--line);margin:12px 0 6px}
-.meter i{position:absolute;top:0;bottom:0;border-radius:99px}.meter b{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--mut)}
-.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
-.row{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
-.row:first-of-type{border-top:0}
-.row small{grid-column:1/-1;color:var(--mut);font-size:12px;margin-top:-4px}
-.t{position:relative;height:6px;background:var(--surf2);border-radius:99px;border:1px solid var(--line)}
-.t .d{position:absolute;top:-4px;width:12px;height:12px;border-radius:50%;margin-left:-6px}
-.t:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--mut)}
-output{text-align:right;font-weight:600}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{text-align:left;padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
-th{color:var(--mut);font-weight:500;border-top:0;font-size:13px}
-.on td:first-child{color:var(--hi);font-weight:600}
-.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line)}
-.kv:first-of-type{border-top:0}.kv span:last-child{text-align:right}
-.tag{display:inline-block;padding:2px 10px;border-radius:99px;background:var(--surf2);border:1px solid var(--line);font-size:12px;color:var(--mut)}
-.chk{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--line);cursor:pointer;align-items:flex-start}
-.chk:first-of-type{border-top:0}
-.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--hi);flex:none}
-.chk.done span{color:var(--mut);text-decoration:line-through}
-.btns{display:flex;gap:10px;flex-wrap:wrap}
-button,select,textarea,input[type=text]{font:inherit;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+.n{color:var(--mut);font-size:13px}
+.up{color:var(--bull)}.dn{color:var(--bear)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--surf2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:20px;letter-spacing:-.01em}.stat span{font-size:12px;color:var(--mut)}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mh b{font-size:17px;text-transform:capitalize}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dow{font-size:12px;color:var(--mut);text-align:center;padding:2px 0}
+.day{min-height:72px;border:1px solid var(--line);border-radius:10px;padding:6px 7px;background:var(--surf2);cursor:pointer;overflow:hidden}
+.day.empty{background:transparent;border:0;cursor:default}
+.day.sel{outline:2px solid var(--hi)}
+.day.today .dn1{color:var(--hi);font-weight:700}
+.day .dn1{font-size:12px;color:var(--mut)}
+.day .p{font-weight:700;font-size:13px;margin-top:4px}
+.day .m{font-size:11px;color:var(--mut)}
+.day.win{background:rgba(47,191,113,.14);border-color:rgba(47,191,113,.4)}
+.day.loss{background:rgba(229,72,77,.14);border-color:rgba(229,72,77,.4)}
+.day.we{opacity:.55}
+button,select,textarea,input{font:inherit;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
 button{cursor:pointer;font-weight:600}
-button.sel.go{background:var(--bull);border-color:var(--bull);color:#fff}
-button.sel.no{background:var(--bear);border-color:var(--bear);color:#fff}
-textarea{width:100%;min-height:70px;resize:vertical}
-label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+button.pri{background:var(--hi);border-color:var(--hi);color:#000}
+button.dg{color:var(--bear)}button.sm{padding:4px 10px;font-size:13px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+label{display:block;font-size:12px;color:var(--mut);margin:0 0 3px}
+textarea{width:100%;min-height:70px;resize:vertical}input,select{width:100%}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--hi);padding:0}
+.chk{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line);cursor:pointer;align-items:flex-start;color:var(--tx);font-size:14px;margin:0}
+.chk.done span{color:var(--mut);text-decoration:line-through}
 .bar{height:8px;background:var(--surf2);border-radius:99px;overflow:hidden;border:1px solid var(--line);margin:6px 0}
 .bar i{display:block;height:100%;background:var(--hi)}
-a.lnk{color:var(--hi);text-decoration:none}
-.warn{border-color:var(--hi)}
-@media(max-width:520px){.row{grid-template-columns:110px 1fr 40px}.big{font-size:28px}}
+.tr{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--surf2)}
+.tr .hd{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:12px;color:var(--mut);margin-right:4px}
+.ph{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ph img{width:96px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in}
+.ph .w{position:relative}.ph .x{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:6px;padding:0 6px;font-size:12px}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out}
+#lb img{max-width:96vw;max-height:94vh;border-radius:8px}
+svg{display:block;width:100%;height:90px}
+@media(max-width:560px){.day{min-height:58px;padding:4px}.day .m{display:none}.day .p{font-size:11px}}
 </style></head><body>
 <header><div class="top"><div class="logo">NQ <span>Hub</span></div><div class="goal">10K até fevereiro · disciplina, plano e journal</div></div>
-<nav id="nav"></nav></header>
-<main id="app"><p class="n">A carregar…</p></main>
+<nav><a href="index.html#hoje">Hoje</a><a href="index.html#bias">Bias</a><a href="index.html#vol">Volatilidade</a><a href="index.html#amd">AMD</a><a href="index.html#plano">Plano</a><a href="index.html#testes">Testes</a><a class="on" href="journal.html">Journal</a></nav></header>
+<main id="app"></main><div id="lb"><img id="lbi"></div>
 <script>
-var TABS=[['hoje','Hoje'],['bias','Bias'],['vol','Volatilidade'],['amd','AMD'],['plano','Plano'],['testes','Testes']];
-function J(u){return fetch(u+'?'+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return null})}
-function col(v){return v>0?'var(--bull)':v<0?'var(--bear)':'var(--mut)'}
-function sg(v){return (v>0?'+':v<0?'−':'')+Math.abs(v)}
-function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
-function none(t){return '<section class="card"><p class="n">Ainda não há dados ('+t+'). Corre o workflow correspondente em Actions.</p></section>'}
-function when(d){return '<p class="n">Atualizado: '+new Date(d.updated).toLocaleString('pt-PT')+'</p>'}
-function meter(total){var w=Math.abs(total)/2,l=total<0?50-w:50;return '<div class="meter"><i style="left:'+l+'%;width:'+w+'%;background:'+col(total)+'"></i><b></b></div><div class="ends"><span>Bearish −100</span><span>0</span><span>+100 Bullish</span></div>'}
-function pr(b){if(!b||b.p==null)return '<span class="n">n='+(b?b.n:0)+' (pouco)</span>';var s=b.vs>0?'+':'';return b.p+'% (n='+b.n+') ['+s+b.vs+(Math.abs(b.vs)>2*b.se?' *':'')+']'}
-var NM={A:'Acumulação',M:'Manipulação',D:'Distribuição',O:'Outro'};
-function topAMD(d){
-  var x=(d.dias||[]).filter(function(y){return y.status!=='fechado'&&y.status!=='sem sessão'})[0];
-  if(!x)return null;var c=x.cond||x.base,top=null;
-  ['A','M','D','O'].forEach(function(t){if(top===null||c[t]>top.v)top={t:t,v:c[t]}});
-  var base=x.base,diff=x.cond?top.v-base[top.t]:0;
-  return {dia:x.nome,tipo:top.t,v:top.v,claro:!!x.cond&&Math.abs(diff)>3,ctx:x.contexto}}
-
-/* ---------- HOJE ---------- */
-function vHoje(b,v,a){
-  var h='<h1>Hoje</h1><p class="n">Resumo dos painéis. É contexto para o teu plano, não uma previsão.</p><div class="grid">';
-  h+='<section class="card"><h2>Bias</h2>'+(b?'<p class="big" style="color:'+col(b.total)+'">'+b.label+'</p><p class="sub">Score '+sg(b.total)+'</p>'+meter(b.total)+'<p style="margin:12px 0 0"><a class="lnk" href="#bias">ver módulos →</a></p>':'<p class="n">sem dados</p>')+'</section>';
-  h+='<section class="card"><h2>Vai mexer-se muito?</h2>'+(v?'<p class="big">'+esc(v.label)+'</p><p class="sub">'+(v.cenario.p!=null?'Em cenários iguais: expansão '+v.cenario.p+'% (base '+v.base_exp+'%)':'Poucos dias parecidos')+'</p><p class="n">Movimento ±1σ pelo VXN ≈ '+v.sigma_pts+' pts</p><p style="margin:12px 0 0"><a class="lnk" href="#vol">ver detalhe →</a></p>':'<p class="n">sem dados</p>')+'</section>';
-  var t=a?topAMD(a):null;
-  h+='<section class="card"><h2>AMD</h2>'+(a?(t?'<p class="big">'+(t.claro?NM[t.tipo]:'Sem sinal claro')+'</p><p class="sub">'+t.dia+' · tendência HTF: '+a.htf+'</p><p class="n">'+(t.claro?'Mais provável neste contexto ('+t.v+'%)':'Nenhum tipo se destaca da base')+'</p>':'<p class="n">Sem sessão hoje.</p>')+'<p style="margin:12px 0 0"><a class="lnk" href="#amd">ver detalhe →</a></p>':'<p class="n">sem dados</p>')+'</section>';
-  h+='</div>';
-  if(b){
-    var m=b.modules.filter(function(x){return x.k==='amd'||x.k==='struct'});
-    m.forEach(function(x){h+='<section class="card"><h2>'+x.name+' · '+sg(x.contrib)+'</h2><p style="margin:0">'+esc(x.note)+'</p></section>'});
-    var L=b.levels||{};
-    if(L.p5)h+='<section class="card"><h2>Percentis de hoje (NQ)</h2><div class="kv"><span>P5 / P25</span><span>'+L.p5+' / '+L.p25+'</span></div><div class="kv"><span>P50 (mediana)</span><span>'+L.p50+'</span></div><div class="kv"><span>P75 / P95</span><span>'+L.p75+' / '+L.p95+'</span></div><div class="kv"><span>Fecho de ontem · preço usado</span><span>'+b.prev+' · '+b.spot+'</span></div></section>'}
-  var p=loadPlan();var done=Object.keys(p.c||{}).filter(function(k){return p.c[k]}).length;
-  h+='<section class="card warn"><h2>O teu plano de hoje</h2><div class="kv"><span>Checklist</span><span>'+done+' / '+CHK_TOTAL+'</span></div><div class="kv"><span>O teu bias</span><span>'+(p.bias||'por definir')+'</span></div><div class="kv"><span>Decisão</span><span>'+(p.dec||'por decidir')+'</span></div><p style="margin:12px 0 0"><a class="lnk" href="#plano">abrir o plano →</a></p></section>';
-  h+='<p class="n">Ferramenta de leitura, não é aconselhamento financeiro. Os testes mostraram que o bias de direção não tem vantagem provada.</p>';
+var CHK=[['TDA (top-down)',['HTF AMD definido (alta ou baixa)','DOL principal identificada','LTF AMD identificado','OB de alta probabilidade (feito por manipulação, tira estrutura, boa reação)','Limit colocado; à espera do entry trigger / OB chain']],['Checklist final',['Bias HTF claro e narrativa do dia definida','Estrutura AMD percebida; estrutura clara tirada','Protegido / não protegido marcado, sempre com AMD presente','BOS visto nos ciclos AMD e IDM','Liquidez identificada; IDM + BOS + POI alinhados','OTE marcado (onde o mercado rejeita)','Entry trigger definido (SMT, order block) e VWAP tocado ou não','SVP/PVP: VAH e VAL rejeitam? o POC segura o preço?','Há SMT com o ES?','Atenção a fake IDM (só tirou o low e enganou)','Nunca operar no meio do range, sempre numa extremidade']]];
+var CT=CHK.reduce(function(s,g){return s+g[1].length},0);
+var GR=['A+','A','B+','B','C'],TF=['Diário','4H','1H','15m','5m','3m','1m'];
+var MONTHS=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+var now=new Date(),S={y:now.getFullYear(),m:now.getMonth(),sel:null,edit:null};
+/* ---- dados ---- */
+function load(){try{return JSON.parse(localStorage.getItem('nqj'))||{days:{}}}catch(e){return {days:{}}}}
+var D=load();function save(){try{localStorage.setItem('nqj',JSON.stringify(D))}catch(e){alert('Sem espaço para guardar.')}}
+function dk(y,m,d){return y+'-'+('0'+(m+1)).slice(-2)+'-'+('0'+d).slice(-2)}
+function pk(k){var a=k.split('-');return 'plano-'+a[0]+'-'+(+a[1])+'-'+(+a[2])}
+function plan(k){try{return JSON.parse(localStorage.getItem(pk(k)))||{c:{}}}catch(e){return {c:{}}}}
+function savePlan(k,p){try{localStorage.setItem(pk(k),JSON.stringify(p))}catch(e){}}
+function day(k){return D.days[k]||(D.days[k]={trades:[],photos:[],review:''})}
+function tsum(x){return x.trades.reduce(function(s,t){return s+(+t.pnl||0)},0)}
+function hasM(x){return x&&x.pnlM!==undefined&&x.pnlM!==''&&x.pnlM!==null}
+function dpnl(k){var x=D.days[k];return x?(hasM(x)?+x.pnlM:tsum(x)):0}
+function hasT(k){var x=D.days[k];return !!x&&(x.trades.length>0||hasM(x))}
+function money(v){return (v>0?'+':v<0?'−':'')+'$'+Math.abs(Math.round(v*100)/100).toLocaleString('pt-PT')}
+function cls(v){return v>0?'up':v<0?'dn':''}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+/* ---- fotos (IndexedDB) ---- */
+var DBP=new Promise(function(res,rej){try{var q=indexedDB.open('nqj-photos',1);q.onupgradeneeded=function(){q.result.createObjectStore('p')};q.onsuccess=function(){res(q.result)};q.onerror=function(){rej()}}catch(e){rej()}});
+function dbp(mode,fn){return DBP.then(function(db){return new Promise(function(res,rej){var t=db.transaction('p',mode),r=fn(t.objectStore('p'));t.oncomplete=function(){res(r&&r.result)};t.onerror=function(){rej()}})})}
+function shrink(f){return new Promise(function(res){var im=new Image(),u=URL.createObjectURL(f);im.onload=function(){var s=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(function(b){URL.revokeObjectURL(u);res(b||f)},'image/jpeg',.82)};im.onerror=function(){res(f)};im.src=u})}
+function addPhotos(files){return Promise.all(Array.prototype.map.call(files,function(f){var id=uid();return shrink(f).then(function(b){return dbp('readwrite',function(s){return s.put(b,id)})}).then(function(){return id})}))}
+function fillImgs(){document.querySelectorAll('img[data-p]').forEach(function(im){if(im.src)return;dbp('readonly',function(s){return s.get(im.dataset.p)}).then(function(b){if(b)im.src=URL.createObjectURL(b)})})}
+function delPhoto(id){return dbp('readwrite',function(s){return s.delete(id)})}
+function phHtml(ids,own){return '<div class="ph">'+(ids||[]).map(function(id){return '<div class="w"><img data-p="'+id+'" alt="">'+(own?'<button class="x" data-delph="'+id+'" data-own="'+own+'">×</button>':'')+'</div>'}).join('')+'</div>'}
+/* ---- calendário ---- */
+function monthStats(){
+  var keys=Object.keys(D.days).filter(function(k){return k.indexOf(S.y+'-'+('0'+(S.m+1)).slice(-2))===0&&hasT(k)}).sort();
+  var tot=0,nt=0,w=0,best=null,worst=null,gd=0,cum=0,pts=[0];
+  keys.forEach(function(k){var p=dpnl(k);tot+=p;cum+=p;pts.push(cum);if(p>0)gd++;if(best===null||p>best)best=p;if(worst===null||p<worst)worst=p;D.days[k].trades.forEach(function(t){nt++;if(+t.pnl>0)w++})});
+  return {tot:tot,days:keys.length,gd:gd,nt:nt,w:w,best:best,worst:worst,pts:pts}}
+function spark(pts){if(pts.length<2)return '';var mn=Math.min.apply(0,pts),mx=Math.max.apply(0,pts),r=(mx-mn)||1;
+  var p=pts.map(function(v,i){return (i/(pts.length-1)*300).toFixed(1)+','+(80-(v-mn)/r*70).toFixed(1)}).join(' ');
+  var z=80-(0-mn)/r*70;return '<svg viewBox="0 0 300 90" preserveAspectRatio="none"><line x1="0" x2="300" y1="'+z+'" y2="'+z+'" stroke="var(--line)" stroke-dasharray="3"/><polyline fill="none" stroke="var(--hi)" stroke-width="2" points="'+p+'"/></svg>'}
+function vCal(){
+  var st=monthStats(),first=new Date(S.y,S.m,1),off=(first.getDay()+6)%7,nd=new Date(S.y,S.m+1,0).getDate(),tk=dk(now.getFullYear(),now.getMonth(),now.getDate());
+  var h='<h1>Journal</h1><p class="n">Clica num dia para ver o PnL, as trades, as fotos e a checklist.</p><section class="card"><div class="stats">'+
+   '<div class="stat"><b class="'+cls(st.tot)+'">'+money(st.tot)+'</b><span>PnL do mês</span></div>'+
+   '<div class="stat"><b>'+st.days+'</b><span>dias com trades'+(st.days?' ('+Math.round(st.gd/st.days*100)+'% verdes)':'')+'</span></div>'+
+   '<div class="stat"><b>'+st.nt+'</b><span>trades'+(st.nt?' ('+Math.round(st.w/st.nt*100)+'% ganhas)':'')+'</span></div>'+
+   '<div class="stat"><b class="up">'+(st.best==null?'–':money(st.best))+'</b><span>melhor dia</span></div>'+
+   '<div class="stat"><b class="dn">'+(st.worst==null?'–':money(st.worst))+'</b><span>pior dia</span></div></div>'+spark(st.pts)+'</section>';
+  h+='<section class="card"><div class="mh"><button id="pv">←</button><b>'+MONTHS[S.m]+' '+S.y+'</b><button id="nx">→</button></div><div class="cal">';
+  ['seg','ter','qua','qui','sex','sáb','dom'].forEach(function(x){h+='<div class="dow">'+x+'</div>'});
+  for(var i=0;i<off;i++)h+='<div class="day empty"></div>';
+  for(var d=1;d<=nd;d++){var k=dk(S.y,S.m,d),t=hasT(k),p=dpnl(k),wd=new Date(S.y,S.m,d).getDay(),pl=plan(k),done=Object.keys(pl.c||{}).filter(function(z){return pl.c[z]}).length;
+    h+='<div class="day'+(t?(p>0?' win':p<0?' loss':''):'')+(S.sel===k?' sel':'')+(k===tk?' today':'')+(wd===0||wd===6?' we':'')+'" data-k="'+k+'"><div class="dn1">'+d+'</div>'+(t?'<div class="p '+cls(p)+'">'+money(p)+'</div><div class="m">'+(D.days[k].trades.length?D.days[k].trades.length+' trade(s)':'sem detalhe')+'</div>':(done?'<div class="m">checklist '+done+'/'+CT+'</div>':''))+'</div>'}
+  return h+'</div></section>'}
+/* ---- dia ---- */
+function vTrade(t,k){
+  var p=+t.pnl||0;
+  return '<div class="tr"><div class="hd"><div><b>'+esc(t.hora||'')+' '+esc(t.dir||'')+'</b> '+(t.qty?esc(t.qty)+' '+esc(t.inst||'')+' ':'')+(t.entry?'· '+esc(t.entry)+' → '+esc(t.exit):'')+'<br>'+(t.grade?'<span class="tag">Qualidade '+esc(t.grade)+'</span>':'')+(t.tf?'<span class="tag">POI '+esc(t.tf)+'</span>':'')+'</div><div><b class="'+cls(p)+'" style="font-size:18px">'+money(p)+'</b> <button class="sm" data-et="'+t.id+'">editar</button></div></div>'+(t.setup?'<p style="margin:8px 0 0"><b>Setup:</b> '+esc(t.setup)+'</p>':'')+(t.notes?'<p style="margin:6px 0 0" class="n">'+esc(t.notes)+'</p>':'')+phHtml(t.photos,0)+'</div>'}
+function fTrade(t){
+  var o=function(a,v){return a.map(function(x){return '<option'+(x===v?' selected':'')+'>'+x+'</option>'}).join('')};
+  return '<div class="tr" id="tf"><div class="f">'+
+   '<div><label>Hora</label><input id="f_hora" type="time" value="'+esc(t.hora)+'"></div>'+
+   '<div><label>Direção</label><select id="f_dir">'+o(['Long','Short'],t.dir||'Long')+'</select></div>'+
+   '<div><label>Instrumento</label><select id="f_inst">'+o(['NQ','MNQ'],t.inst||'NQ')+'</select></div>'+
+   '<div><label>Contratos</label><input id="f_qty" type="number" step="1" value="'+esc(t.qty)+'"></div>'+
+   '<div><label>Entrada</label><input id="f_entry" type="number" step="0.25" value="'+esc(t.entry)+'"></div>'+
+   '<div><label>Saída</label><input id="f_exit" type="number" step="0.25" value="'+esc(t.exit)+'"></div>'+
+   '<div><label>PnL ($) – calcula sozinho, podes mudar</label><input id="f_pnl" type="number" step="0.01" value="'+esc(t.pnl)+'"></div>'+
+   '<div><label>Qualidade</label><select id="f_grade"><option value="">–</option>'+o(GR,t.grade)+'</select></div>'+
+   '<div><label>TF do POI</label><select id="f_tf"><option value="">–</option>'+o(TF,t.tf)+'</select></div></div>'+
+   '<label style="margin-top:10px">Setup (OB, IDM, BOS, trigger…)</label><input id="f_setup" type="text" value="'+esc(t.setup)+'">'+
+   '<label style="margin-top:10px">Notas (o que correu bem / mal)</label><textarea id="f_notes">'+esc(t.notes)+'</textarea>'+
+   '<label style="margin-top:10px">Fotos da trade</label><input id="f_ph" type="file" accept="image/*" multiple>'+phHtml(t.photos,'t')+
+   '<div class="btns" style="margin-top:12px"><button class="pri" id="ts">Guardar trade</button><button id="tc">Cancelar</button>'+(t.id&&D.days[S.sel]&&D.days[S.sel].trades.some(function(x){return x.id===t.id})?'<button class="dg" id="td">Apagar</button>':'')+'</div></div>'}
+function vDay(){
+  var k=S.sel;if(!k)return '';var x=day(k),pl=plan(k),p=dpnl(k),dt=new Date(k+'T12:00:00');
+  var done=Object.keys(pl.c||{}).filter(function(z){return pl.c[z]}).length;
+  var h='<section class="card" id="dia"><div class="mh"><div><b style="text-transform:capitalize">'+dt.toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</b><br><span class="n">'+x.trades.length+' trade(s)</span></div><div style="text-align:right"><b class="'+cls(p)+'" style="font-size:26px">'+money(p)+'</b><br><button class="sm" id="cl">fechar</button></div></div><label>PnL do dia ($) – escreve quanto fizeste (ex.: 350 ou -120)</label><input id="pm" type="number" step="0.01" value="'+(hasM(x)?esc(x.pnlM):'')+'" placeholder="'+(x.trades.length?'vazio = soma das trades ('+tsum(x)+')':'ex.: 350')+'"></section>';
+  h+='<section class="card"><h2>Plano do dia</h2><div class="f"><div><label>O meu bias</label><select id="p_bias"><option value="">–</option>'+['Alta','Baixa','Neutro'].map(function(v){return '<option'+(pl.bias===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>'+
+   '<div><label>Decisão</label><select id="p_dec"><option value="">–</option>'+['TRADE','NO TRADE'].map(function(v){return '<option'+(pl.dec===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>'+
+   '<div><label>DOL principal</label><input id="p_dol" type="text" value="'+esc(pl.dol)+'"></div></div>'+
+   '<label style="margin-top:10px">O que queria que acontecesse</label><textarea id="p_que">'+esc(pl.que)+'</textarea>'+
+   '<details style="margin-top:10px"><summary style="cursor:pointer"><b>Checklist '+done+' / '+CT+'</b></summary><div class="bar"><i style="width:'+(done/CT*100)+'%"></i></div>';
+  CHK.forEach(function(g,gi){h+='<p class="n" style="margin:10px 0 2px"><b>'+g[0]+'</b></p>';g[1].forEach(function(t,i){var c=gi+'-'+i;h+='<label class="chk'+(pl.c[c]?' done':'')+'"><input type="checkbox" data-c="'+c+'"'+(pl.c[c]?' checked':'')+'><span>'+t+'</span></label>'})});
+  h+='</details></section><section class="card"><div class="mh"><h2 style="margin:0">Trades</h2><button class="pri sm" id="nt">+ Nova trade</button></div>';
+  if(S.edit&&!x.trades.some(function(z){return z.id===S.edit}))h+=fTrade(TMP||{id:S.edit,photos:[]});
+  x.trades.forEach(function(t){h+=S.edit===t.id?fTrade(TMP&&TMP.id===t.id?TMP:t):vTrade(t,k)});
+  if(!x.trades.length&&!S.edit)h+='<p class="n">Sem trades neste dia. Se não operaste, deixa assim e escreve a revisão abaixo.</p>';
+  h+='</section><section class="card"><h2>Fotos do dia</h2><input id="dph" type="file" accept="image/*" multiple>'+phHtml(x.photos,'d')+'<label style="margin-top:14px">Revisão do dia (o que fiz bem, o que errei, lição)</label><textarea id="rev">'+esc(x.review)+'</textarea></section>';
   return h}
-
-/* ---------- BIAS ---------- */
-function vBias(d){
-  if(!d)return none('data.json');
-  var h='<h1>Bias</h1><section class="card"><p class="big" style="color:'+col(d.total)+'">'+d.label+'</p><p class="sub">Score '+sg(d.total)+' · valor do modelo '+d.up+'% alta, '+(100-d.up)+'% baixa (mapa linear, não é probabilidade calibrada)</p>'+meter(d.total)+'</section>';
-  h+='<section class="card"><h2>Contribuição por módulo</h2>';
-  d.modules.forEach(function(m){h+='<div class="row"><span>'+m.name+'</span><div class="t"><span class="d" style="left:'+(50+m.score/2)+'%;background:'+col(m.score)+'"></span></div><output style="color:'+col(m.contrib)+'">'+sg(m.contrib)+'</output><small>'+esc(m.note)+'</small></div>'});
-  h+='</section>'+when(d);return h}
-
-/* ---------- VOL ---------- */
-function vVol(d){
-  if(!d)return none('vol.json');var c=d.cenario;
-  var h='<h1>Hoje vai mexer-se muito?</h1><section class="card"><p class="big">'+esc(d.label)+'</p><p class="sub">'+(c.p!=null?'Em cenários iguais a este o NQ teve um dia de expansão em '+c.p+'% das vezes (base: '+d.base_exp+'%), em '+c.n+' dias.':'Há poucos dias parecidos no histórico para dar um número.')+'</p></section>';
-  h+='<section class="card"><h2>Estado de hoje (dados até '+d.ref+')</h2>';
-  h+='<div class="kv"><span>Compressão (dias calmos recentes)</span><span>'+(d.estado.compressao?'sim':'não')+'</span></div>';
-  h+='<div class="kv"><span>Ontem foi dia de expansão</span><span>'+(d.estado.ontem_expansao?'sim':'não')+'</span></div>';
-  h+='<div class="kv"><span>VXN</span><span>'+d.vxn+' (percentil '+d.vxn_pct+'%, '+d.estado.vxn+')</span></div>';
-  h+='<div class="kv"><span>Range esperado nestes cenários (mediana)</span><span>'+(c.range_med!=null?c.range_med+'% ≈ '+d.range_pts+' pts':'–')+'</span></div>';
-  h+='<div class="kv"><span>Range mediano em qualquer dia</span><span>'+d.range_base+'%</span></div>';
-  h+='<div class="kv"><span>Movimento esperado pelo VXN (±1σ)</span><span>≈ '+d.sigma_pts+' pts</span></div></section>';
-  h+='<section class="card"><h2>Cada sinal, isolado</h2><table><tr><th>Condição</th><th>Expansão a seguir</th></tr>';
-  d.marginais.forEach(function(m){h+='<tr class="'+(m.ativo?'on':'')+'"><td>'+esc(m.cond)+(m.ativo?' (ativo hoje)':'')+'</td><td>'+pr(m)+'</td></tr>'});
-  h+='</table></section><p class="n">Expansão = range do dia ≥ 1,5x a média dos últimos 20 dias. [ ] = diferença face a todos os dias; * = mais de 2 erros-padrão. Não inclui calendário (FOMC, CPI, NFP, resultados): confirma à parte.</p>'+when(d);return h}
-
-/* ---------- AMD ---------- */
-function cell(c,t){if(!c)return '–';var v=c[t+'_vs'],s=v>0?'+':'';return c[t]+'% ['+s+v+(c[t+'_star']?' *':'')+']'}
-function dayAMD(d){
-  var h='<section class="card"><h2>'+d.nome+' '+d.data+' · '+d.status+'</h2>';
-  if(d.status==='fechado')return h+'<p style="margin:0">Foi um dia de <b>'+NM[d.tipo]+'</b>'+(d.lado?' ('+d.lado+')':'')+'.</p></section>';
-  if(d.status==='sem sessão')return h+'<p class="n" style="margin:0">Sem sessão.</p></section>';
-  var b=d.base,c=d.cond,top=null;
-  ['A','M','D','O'].forEach(function(t){var x=c?c[t]:b[t];if(top===null||x>top.v)top={t:t,v:x}});
-  h+='<p class="n">Contexto: '+esc(d.contexto)+(c?' (n='+c.n+')':' (poucos dias parecidos, só a base)')+'</p>';
-  h+='<table><tr><th>Tipo</th><th>Base (n='+b.n+')</th><th>Neste contexto [vs base]</th></tr>';
-  ['A','M','D','O'].forEach(function(t){h+='<tr class="'+(top.t===t?'on':'')+'"><td>'+NM[t]+'</td><td>'+b[t]+'%</td><td>'+cell(c,t)+'</td></tr>'});
-  h+='</table>';var x=c||b;
-  if(x.d_alta!=null||x.m_max!=null)h+='<p class="n">'+(x.d_alta!=null?'Em distribuição, '+x.d_alta+'% fecham em alta. ':'')+(x.m_max!=null?'Em manipulação, '+x.m_max+'% varrem o máximo do dia anterior.':'')+'</p>';
-  return h+'</section>'}
-function vAMD(d){
-  if(!d)return none('amd.json');
-  var h='<h1>Acumulação, manipulação ou distribuição?</h1><p class="n">Regras objetivas sobre o diário do NQ. Dados até '+d.ref+'.</p>';
-  h+='<section class="card"><h2>HTF (diário)</h2><p style="margin:0">Tendência: <b>'+d.htf+'</b>. Último dia fechado: <b>'+NM[d.ultimo_tipo]+'</b>'+(d.ultimo_lado?' ('+d.ultimo_lado+')':'')+'.</p></section>';
-  d.dias.forEach(function(x){h+=dayAMD(x)});
-  var l=d.ltf;
-  h+='<section class="card"><h2>LTF (hoje, intradiário)</h2>'+(l?'<p class="n">Ásia (00–06 UTC): '+l.asia_low+' – '+l.asia_high+'. Londres (06–12 UTC): '+l.lon_low+' – '+l.lon_high+'. Último: '+l.ultimo+'.</p><p style="margin:0">'+esc(l.leitura)+'</p>':'<p class="n" style="margin:0">Sem dados intradiários (fim de semana ou feriado).</p>')+'</section>';
-  h+='<p class="n">Definições aproximadas: Acumulação = dia dentro do range anterior ou com pouco range. Manipulação = varre o máximo/mínimo anterior e fecha de volta dentro. Distribuição = fecha fora do range anterior, range normal/grande, fecho perto de um extremo. Não há prova de que o padrão se repita.</p>'+when(d);return h}
-
-/* ---------- PLANO ---------- */
-var CHK=[
- ['TDA (top-down)',['HTF AMD definido (alta ou baixa)','DOL principal identificada','LTF AMD identificado','OB de alta probabilidade (feito por manipulação, tira estrutura, boa reação)','Limit colocado; à espera do entry trigger / OB chain']],
- ['Checklist final',['Bias HTF claro e narrativa do dia definida','Estrutura AMD percebida; estrutura clara tirada','Protegido / não protegido marcado, sempre com AMD presente','BOS visto nos ciclos AMD e IDM','Liquidez identificada; IDM + BOS + POI alinhados','OTE marcado (onde o mercado rejeita)','Entry trigger definido (SMT, order block) e VWAP tocado ou não','SVP/PVP: VAH e VAL rejeitam? o POC segura o preço?','Há SMT com o ES?','Atenção a fake IDM (só tirou o low e enganou)','Nunca operar no meio do range, sempre numa extremidade']]];
-var CHK_TOTAL=CHK.reduce(function(s,g){return s+g[1].length},0);
-function todayKey(){var d=new Date();return 'plano-'+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
-function loadPlan(){try{return JSON.parse(localStorage.getItem(todayKey()))||{c:{}}}catch(e){return {c:{}}}}
-function savePlan(p){try{localStorage.setItem(todayKey(),JSON.stringify(p))}catch(e){}}
-function vPlano(b){
-  var p=loadPlan();p.c=p.c||{};
-  var done=Object.keys(p.c).filter(function(k){return p.c[k]}).length;
-  var h='<h1>Plano de hoje</h1><p class="n">'+new Date().toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long'})+'. Fica guardado neste browser; para o Notion usa "Copiar resumo".</p>';
-  h+='<section class="card"><h2>A tua leitura</h2><label>O meu bias</label><div class="btns" id="bb">';
-  ['Alta','Baixa','Neutro'].forEach(function(x){h+='<button data-b="'+x+'" class="'+(p.bias===x?'sel '+(x==='Alta'?'go':x==='Baixa'?'no':''):'')+'">'+x+'</button>'});
-  h+='</div>'+(b?'<p class="n">Painel: '+b.label+' ('+sg(b.total)+')</p>':'')+
-   '<label>DOL principal</label><input type="text" id="dol" style="width:100%" value="'+esc(p.dol||'')+'" placeholder="ex.: PDL, EQL, OB 4H…">'+
-   '<label>O que quero que aconteça</label><textarea id="que">'+esc(p.que||'')+'</textarea>'+
-   '<label>Notas / POI (OB, IDM, BOS)</label><textarea id="nota">'+esc(p.nota||'')+'</textarea></section>';
-  h+='<section class="card"><h2>Checklist · <span id="cnt">'+done+' / '+CHK_TOTAL+'</span></h2><div class="bar"><i id="pb" style="width:'+(done/CHK_TOTAL*100)+'%"></i></div>';
-  CHK.forEach(function(g,gi){h+='<p class="n" style="margin:12px 0 2px"><b>'+g[0]+'</b></p>';g[1].forEach(function(t,i){var k=gi+'-'+i;h+='<label class="chk'+(p.c[k]?' done':'')+'" style="margin:0;color:var(--tx);font-size:15px"><input type="checkbox" data-k="'+k+'"'+(p.c[k]?' checked':'')+'><span>'+t+'</span></label>'})});
-  h+='</section><section class="card warn"><h2>Decisão de hoje</h2><div class="btns" id="dd"><button data-d="TRADE" class="'+(p.dec==='TRADE'?'sel go':'')+'">TRADE</button><button data-d="NO TRADE" class="'+(p.dec==='NO TRADE'?'sel no':'')+'">NO TRADE</button></div><p class="n">A decisão é tua. Se a checklist não está completa ou o preço está no meio do range, a tua própria regra diz NO TRADE.</p><p><button id="cp">Copiar resumo</button> <span class="n" id="ok"></span></p></section>';
-  setTimeout(function(){
-    function upd(){savePlan(p);var n=Object.keys(p.c).filter(function(k){return p.c[k]}).length;var e=document.getElementById('cnt');if(e){e.textContent=n+' / '+CHK_TOTAL;document.getElementById('pb').style.width=(n/CHK_TOTAL*100)+'%'}}
-    document.querySelectorAll('input[data-k]').forEach(function(el){el.onchange=function(){p.c[el.dataset.k]=el.checked;el.parentNode.classList.toggle('done',el.checked);upd()}});
-    document.querySelectorAll('#bb button').forEach(function(el){el.onclick=function(){p.bias=el.dataset.b;upd();route()}});
-    document.querySelectorAll('#dd button').forEach(function(el){el.onclick=function(){p.dec=el.dataset.d;upd();route()}});
-    ['dol','que','nota'].forEach(function(id){var e=document.getElementById(id);e.oninput=function(){p[id]=e.value;upd()}});
-    document.getElementById('cp').onclick=function(){
-      var n=Object.keys(p.c).filter(function(k){return p.c[k]}).length;
-      var t='Plano '+new Date().toLocaleDateString('pt-PT')+'\nO meu bias: '+(p.bias||'-')+(b?' (painel: '+b.label+' '+sg(b.total)+')':'')+'\nDOL: '+(p.dol||'-')+'\nO que quero que aconteça: '+(p.que||'-')+'\nNotas: '+(p.nota||'-')+'\nChecklist: '+n+'/'+CHK_TOTAL+'\nDecisão: '+(p.dec||'-');
-      (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){document.getElementById('ok').textContent='copiado'}).catch(function(){document.getElementById('ok').textContent='não deu para copiar'})}
-  },0);
-  return h}
-
-/* ---------- TESTES ---------- */
-function ab(b){if(!b||b.win==null)return '<span class="n">n='+(b?b.n:0)+' (pouco)</span>';var s=b.vs_base>0?'+':'';return b.win+'% (n='+b.n+') ['+s+b.vs_base+(Math.abs(b.vs_base)>2*b.se?' *':'')+']'}
-function vTestes(a,e,bt){
-  var h='<h1>Testes: o bias e os sinais valem alguma coisa?</h1><p class="n">Resumo honesto: o bias de direção não mostrou vantagem provada (nada passou de 2 erros-padrão e os resultados trocam entre metades do histórico). [ ] = diferença face ao acaso; * = mais de 2 erros-padrão.</p>';
-  if(bt){h+='<section class="card"><h2>Backtest ('+bt.inicio+' a '+bt.fim+')</h2><p class="n">Base: sobe no dia seguinte em '+bt.tudo.base.sobe_pct+'% dos dias.</p><table><tr><th>Score</th><th>Dias</th><th>Subiu depois (%)</th></tr>';
-    bt.tudo.faixas.forEach(function(f){h+='<tr><td>'+f.faixa+'</td><td>'+f.dias+'</td><td>'+f.sobe_pct+'</td></tr>'});h+='</table></section>'}
-  if(a){var cp=a.tudo.completo;h+='<section class="card"><h2>Ablação ('+a.tudo.dias+' dias)</h2><p class="n">Completo → bull '+ab(cp.bull)+' | bear '+ab(cp.bear)+'</p><table><tr><th>Módulo</th><th>Só ele: bull</th><th>Só ele: bear</th><th>Sem ele</th></tr>';
-    a.tudo.modulos.forEach(function(m){if(!m.testavel){h+='<tr><td>'+m.nome+'</td><td colspan="3" class="n">sem dados</td></tr>';return}h+='<tr><td>'+m.nome+'</td><td>'+ab(m.so.bull)+'</td><td>'+ab(m.so.bear)+'</td><td>'+ab(m.sem.comb)+'</td></tr>'});h+='</table></section>'}
-  if(e){h+='<section class="card"><h2>Expansão (base '+e.tudo.base_exp+'%)</h2><table><tr><th>Condição hoje</th><th>Expansão amanhã</th></tr>';
-    e.tudo.linhas.forEach(function(l){h+='<tr><td>'+esc(l.cond)+'</td><td>'+pr(l.exp)+'</td></tr>'});h+='</table></section>'}
-  if(!a&&!e&&!bt)h+=none('backtest/ablation/expansion');
-  return h+'<p class="n">Páginas completas: <a class="lnk" href="backtest.html">backtest</a> · <a class="lnk" href="ablation.html">ablação</a> · <a class="lnk" href="expansion.html">expansão</a>.</p>'}
-
-/* ---------- ROUTER ---------- */
-var cache={};
-function get(k,u){if(cache[k]&&Date.now()-cache[k].t<60000)return Promise.resolve(cache[k].v);return J(u).then(function(v){cache[k]={t:Date.now(),v:v};return v})}
-function route(){
-  var r=(location.hash||'#hoje').slice(1);if(!TABS.some(function(t){return t[0]===r}))r='hoje';
-  document.getElementById('nav').innerHTML=TABS.map(function(t){return '<a href="#'+t[0]+'" class="'+(t[0]===r?'on':'')+'">'+t[1]+'</a>'}).join('');
-  var app=document.getElementById('app');
-  var P=function(a){return Promise.all(a)};
-  var out;
-  if(r==='hoje')out=P([get('b','data.json'),get('v','vol.json'),get('a','amd.json')]).then(function(x){return vHoje(x[0],x[1],x[2])});
-  else if(r==='bias')out=get('b','data.json').then(vBias);
-  else if(r==='vol')out=get('v','vol.json').then(vVol);
-  else if(r==='amd')out=get('a','amd.json').then(vAMD);
-  else if(r==='plano')out=get('b','data.json').then(vPlano);
-  else out=P([get('ab','ablation.json'),get('ex','expansion.json'),get('bt','backtest.json')]).then(function(x){return vTestes(x[0],x[1],x[2])});
-  out.then(function(h){app.innerHTML=h;window.scrollTo(0,0)}).catch(function(e){app.innerHTML='<p class="n">Erro a mostrar esta página.</p>'})}
-window.addEventListener('hashchange',route);
-document.addEventListener('visibilitychange',function(){if(!document.hidden){cache={};if((location.hash||'#hoje')!=='#plano')route()}});
-route();
+/* ---- render / eventos ---- */
+function render(){
+  var y=window.scrollY;document.getElementById('app').innerHTML=vCal()+vDay()+'<section class="card"><h2>Cópia de segurança</h2><p class="n">Os dados ficam guardados neste browser e neste dispositivo. Exporta de vez em quando para não os perderes.</p><div class="btns"><button id="ex">Exportar</button><label class="btns" style="margin:0"><span class="n">Importar:</span><input id="im" type="file" accept=".json" style="width:auto"></label></div></section>';
+  fillImgs();window.scrollTo(0,y);wire()}
+function g(id){return document.getElementById(id)}
+function val(id){var e=g(id);return e?e.value:''}
+function calc(){var a=+val('f_entry'),b=+val('f_exit'),q=+val('f_qty');if(!a||!b||!q)return;var pts=val('f_dir')==='Long'?b-a:a-b;g('f_pnl').value=(Math.round(pts*q*(val('f_inst')==='MNQ'?2:20)*100)/100)}
+function wire(){
+  g('pv').onclick=function(){S.m--;if(S.m<0){S.m=11;S.y--}render()};
+  g('nx').onclick=function(){S.m++;if(S.m>11){S.m=0;S.y++}render()};
+  document.querySelectorAll('.day[data-k]').forEach(function(e){e.onclick=function(){S.sel=e.dataset.k;S.edit=null;TMP=null;render();var d=g('dia');if(d)d.scrollIntoView({behavior:'smooth'})}});
+  document.querySelectorAll('img[data-p]').forEach(function(im){im.onclick=function(){g('lbi').src=im.src;g('lb').style.display='flex'}});
+  g('lb').onclick=function(){g('lb').style.display='none'};
+  g('ex').onclick=doExport;g('im').onchange=doImport;
+  if(!S.sel)return;var k=S.sel,x=day(k),pl=plan(k);
+  g('cl').onclick=function(){S.sel=null;S.edit=null;render()};
+  [['p_bias','bias'],['p_dec','dec'],['p_dol','dol'],['p_que','que']].forEach(function(a){g(a[0]).onchange=function(){var p=plan(k);p.c=p.c||{};p[a[1]]=g(a[0]).value;savePlan(k,p)}});
+  document.querySelectorAll('input[data-c]').forEach(function(e){e.onchange=function(){var p=plan(k);p.c=p.c||{};p.c[e.dataset.c]=e.checked;savePlan(k,p);e.parentNode.classList.toggle('done',e.checked);var n=Object.keys(p.c).filter(function(z){return p.c[z]}).length;e.closest('details').querySelector('summary b').textContent='Checklist '+n+' / '+CT;e.closest('details').querySelector('.bar i').style.width=(n/CT*100)+'%'}});
+  g('nt').onclick=function(){TMP={id:uid(),photos:[]};S.edit=TMP.id;render();var f=g('tf');if(f)f.scrollIntoView({behavior:'smooth'})};
+  document.querySelectorAll('[data-et]').forEach(function(e){e.onclick=function(){S.edit=e.dataset.et;render()}});
+  g('pm').onchange=function(){x.pnlM=g('pm').value;save();render()};
+  g('rev').onchange=function(){x.review=g('rev').value;save()};
+  g('dph').onchange=function(){addPhotos(g('dph').files).then(function(ids){x.photos=(x.photos||[]).concat(ids);save();render()})};
+  document.querySelectorAll('[data-delph]').forEach(function(e){e.onclick=function(ev){ev.stopPropagation();var id=e.dataset.delph;if(!confirm('Apagar esta foto?'))return;
+    if(e.dataset.own==='d'){x.photos=x.photos.filter(function(z){return z!==id});delPhoto(id);save();render()}else{TMP.photos=(TMP.photos||[]).filter(function(z){return z!==id});delPhoto(id);render()}}});
+  if(S.edit){
+    if(!TMP||TMP.id!==S.edit){var t0=x.trades.filter(function(z){return z.id===S.edit})[0];TMP=t0?JSON.parse(JSON.stringify(t0)):{id:S.edit,photos:[]}}
+    ['f_entry','f_exit','f_qty','f_dir','f_inst'].forEach(function(i){g(i).oninput=g(i).onchange=calc});
+    g('tc').onclick=function(){S.edit=null;TMP=null;render()};
+    var td=g('td');if(td)td.onclick=function(){if(!confirm('Apagar a trade?'))return;x.trades=x.trades.filter(function(z){return z.id!==TMP.id});save();S.edit=null;TMP=null;render()};
+    g('ts').onclick=function(){
+      addPhotos(g('f_ph').files).then(function(ids){
+        var o={id:TMP.id,hora:val('f_hora'),dir:val('f_dir'),inst:val('f_inst'),qty:val('f_qty'),entry:val('f_entry'),exit:val('f_exit'),pnl:val('f_pnl')||0,grade:val('f_grade'),tf:val('f_tf'),setup:val('f_setup'),notes:val('f_notes'),photos:(TMP.photos||[]).concat(ids)};
+        var i=x.trades.findIndex(function(z){return z.id===o.id});if(i>=0)x.trades[i]=o;else x.trades.push(o);
+        x.trades.sort(function(a,b){return (a.hora||'').localeCompare(b.hora||'')});save();S.edit=null;TMP=null;render()})}}
+}
+var TMP=null;
+/* ---- backup ---- */
+function blobToData(b){return new Promise(function(r){var f=new FileReader();f.onload=function(){r(f.result)};f.readAsDataURL(b)})}
+function doExport(){
+  var ids=[];Object.keys(D.days).forEach(function(k){var x=D.days[k];ids=ids.concat(x.photos||[]);x.trades.forEach(function(t){ids=ids.concat(t.photos||[])})});
+  var plans={};for(var i=0;i<localStorage.length;i++){var key=localStorage.key(i);if(key.indexOf('plano-')===0)plans[key]=localStorage.getItem(key)}
+  Promise.all(ids.map(function(id){return dbp('readonly',function(s){return s.get(id)}).then(function(b){return b?blobToData(b).then(function(d){return [id,d]}):null})})).then(function(ph){
+    var o={v:1,days:D.days,plans:plans,photos:ph.filter(Boolean)};var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));a.download='nq-journal-'+new Date().toISOString().slice(0,10)+'.json';a.click()})}
+function doImport(){
+  var f=g('im').files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{var o=JSON.parse(r.result);if(!confirm('Isto junta os dados do ficheiro aos que já tens. Continuar?'))return;
+    Object.keys(o.days||{}).forEach(function(k){D.days[k]=o.days[k]});save();
+    Object.keys(o.plans||{}).forEach(function(k){localStorage.setItem(k,o.plans[k])});
+    Promise.all((o.photos||[]).map(function(p){return fetch(p[1]).then(function(r){return r.blob()}).then(function(b){return dbp('readwrite',function(s){return s.put(b,p[0])})})})).then(render)}catch(e){alert('Ficheiro inválido.')}};
+  r.readAsText(f)}
+render();
 </script></body></html>
