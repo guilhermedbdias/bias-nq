@@ -33,12 +33,14 @@ input{width:110px}
 .bt i{position:absolute;top:0;bottom:0;border-radius:3px}
 .bt b{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--mut)}
 .row-spot .k{color:var(--hi);font-weight:700}.row-spot .bt{background:rgba(240,180,41,.18);border-radius:3px}
+.tg{display:inline-block;margin-left:6px;padding:0 7px;border-radius:99px;border:1px solid var(--line);font-size:11px;color:var(--mut)}
 </style></head><body>
 <header><div class="top"><div class="logo">NQ <span>Hub</span></div><div class="goal">10K até fevereiro · disciplina, plano e journal</div></div>
-<nav><a href="index.html#hoje">Hoje</a><a href="index.html#bias">Bias</a><a href="index.html#vol">Volatilidade</a><a href="index.html#amd">AMD</a><a href="index.html#plano">Plano</a><a href="index.html#testes">Testes</a><a href="journal.html">Journal</a><a class="on" href="gamma.html">Gamma</a><a href="levels.html">Níveis</a></nav></header>
+<nav><a href="index.html#hoje">Hoje</a><a href="index.html#bias">Bias</a><a href="index.html#vol">Volatilidade</a><a href="index.html#amd">AMD</a><a href="index.html#plano">Plano</a><a href="index.html#testes">Testes</a><a href="journal.html">Journal</a><a class="on" href="gamma.html">Gamma</a><a href="levels.html">Níveis</a><a href="tv.html">TradingView</a></nav></header>
 <main id="app"><p class="n">A carregar…</p></main>
 <script>
 var D=null,W='1d';
+function esc(s){return String(s)}
 function fm(v){var a=Math.abs(v);return (v<0?'−':'+')+'$'+(a>=1e6?(a/1e6).toFixed(1)+'M':a>=1e3?Math.round(a/1e3)+'K':Math.round(a))}
 function nqOf(k){return Math.round(k*D.ratio)}
 function view(){
@@ -59,9 +61,9 @@ function view(){
   h+='<section class="card"><h2>Gamma por strike (verde = calls, vermelho = puts)</h2><div class="bars">';
   S.slice().sort(function(a,b){return b.k-a.k}).forEach(function(s){
     var w=Math.abs(s.net)/mx*50,l=s.net<0?50-w:50;
-    h+='<div class="k">'+s.k+'</div><div class="bt'+(s.k===near?' row-spot':'')+'"><b></b><i style="left:'+l+'%;width:'+w+'%;background:'+(s.net>=0?'var(--bull)':'var(--bear)')+'"></i></div><div class="n">NQ '+s.nq+'</div>'});
+    h+='<div class="k '+'">'+s.k+'</div><div class="bt'+(s.k===near?' row-spot':'')+'"><b></b><i style="left:'+l+'%;width:'+w+'%;background:'+(s.net>=0?'var(--bull)':'var(--bear)')+'"></i></div><div class="n">NQ '+s.nq+'</div>'});
   h+='</div></section>';
-  h+='<section class="card"><h2>Conversor QQQ → NQ</h2><div class="btns"><input id="cv" type="number" step="0.5" placeholder="strike QQQ"><span id="cvo" class="n"></span></div><p class="n" style="margin:10px 0 0">Escreve o strike do QQQ e vês o preço equivalente no NQ.</p></section>';
+  h+='<section class="card"><h2>Conversor QQQ → NQ</h2><div class="btns"><input id="cv" type="number" step="0.5" placeholder="strike QQQ"><span id="cvo" class="n"></span></div><p class="n" style="margin:10px 0 0">Para comparares com os níveis do Sovereign: escreve o strike do QQQ e vês o preço equivalente no NQ.</p></section>';
   h+='<p class="n">Como é calculado: gamma de Black-Scholes por opção × open interest, com calls positivas e puts negativas (convenção habitual: assume que os market makers estão long calls e short puts). O open interest do Yahoo é do fecho anterior e as IVs podem estar atrasadas, por isso os números diferem dos de serviços pagos. É contexto, não previsão nem aconselhamento financeiro. Atualizado: '+new Date(D.updated).toLocaleString('pt-PT')+'.</p>';
   document.getElementById('app').innerHTML=h;
   document.querySelectorAll('button[data-w]').forEach(function(b){b.onclick=function(){W=b.dataset.w;view()}});
