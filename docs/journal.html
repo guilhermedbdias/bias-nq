@@ -76,8 +76,10 @@ function pk(k){var a=k.split('-');return 'plano-'+a[0]+'-'+(+a[1])+'-'+(+a[2])}
 function plan(k){try{return JSON.parse(localStorage.getItem(pk(k)))||{c:{}}}catch(e){return {c:{}}}}
 function savePlan(k,p){try{localStorage.setItem(pk(k),JSON.stringify(p))}catch(e){}}
 function day(k){return D.days[k]||(D.days[k]={trades:[],photos:[],review:''})}
-function dpnl(k){var x=D.days[k];return x?x.trades.reduce(function(s,t){return s+(+t.pnl||0)},0):0}
-function hasT(k){var x=D.days[k];return x&&x.trades.length>0}
+function tsum(x){return x.trades.reduce(function(s,t){return s+(+t.pnl||0)},0)}
+function hasM(x){return x&&x.pnlM!==undefined&&x.pnlM!==''&&x.pnlM!==null}
+function dpnl(k){var x=D.days[k];return x?(hasM(x)?+x.pnlM:tsum(x)):0}
+function hasT(k){var x=D.days[k];return !!x&&(x.trades.length>0||hasM(x))}
 function money(v){return (v>0?'+':v<0?'−':'')+'$'+Math.abs(Math.round(v*100)/100).toLocaleString('pt-PT')}
 function cls(v){return v>0?'up':v<0?'dn':''}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -111,7 +113,7 @@ function vCal(){
   ['seg','ter','qua','qui','sex','sáb','dom'].forEach(function(x){h+='<div class="dow">'+x+'</div>'});
   for(var i=0;i<off;i++)h+='<div class="day empty"></div>';
   for(var d=1;d<=nd;d++){var k=dk(S.y,S.m,d),t=hasT(k),p=dpnl(k),wd=new Date(S.y,S.m,d).getDay(),pl=plan(k),done=Object.keys(pl.c||{}).filter(function(z){return pl.c[z]}).length;
-    h+='<div class="day'+(t?(p>0?' win':p<0?' loss':''):'')+(S.sel===k?' sel':'')+(k===tk?' today':'')+(wd===0||wd===6?' we':'')+'" data-k="'+k+'"><div class="dn1">'+d+'</div>'+(t?'<div class="p '+cls(p)+'">'+money(p)+'</div><div class="m">'+D.days[k].trades.length+' trade(s)</div>':(done?'<div class="m">checklist '+done+'/'+CT+'</div>':''))+'</div>'}
+    h+='<div class="day'+(t?(p>0?' win':p<0?' loss':''):'')+(S.sel===k?' sel':'')+(k===tk?' today':'')+(wd===0||wd===6?' we':'')+'" data-k="'+k+'"><div class="dn1">'+d+'</div>'+(t?'<div class="p '+cls(p)+'">'+money(p)+'</div><div class="m">'+(D.days[k].trades.length?D.days[k].trades.length+' trade(s)':'sem detalhe')+'</div>':(done?'<div class="m">checklist '+done+'/'+CT+'</div>':''))+'</div>'}
   return h+'</div></section>'}
 /* ---- dia ---- */
 function vTrade(t,k){
@@ -136,7 +138,7 @@ function fTrade(t){
 function vDay(){
   var k=S.sel;if(!k)return '';var x=day(k),pl=plan(k),p=dpnl(k),dt=new Date(k+'T12:00:00');
   var done=Object.keys(pl.c||{}).filter(function(z){return pl.c[z]}).length;
-  var h='<section class="card" id="dia"><div class="mh"><div><b style="text-transform:capitalize">'+dt.toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</b><br><span class="n">'+x.trades.length+' trade(s)</span></div><div style="text-align:right"><b class="'+cls(p)+'" style="font-size:26px">'+money(p)+'</b><br><button class="sm" id="cl">fechar</button></div></div></section>';
+  var h='<section class="card" id="dia"><div class="mh"><div><b style="text-transform:capitalize">'+dt.toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</b><br><span class="n">'+x.trades.length+' trade(s)</span></div><div style="text-align:right"><b class="'+cls(p)+'" style="font-size:26px">'+money(p)+'</b><br><button class="sm" id="cl">fechar</button></div></div><label>PnL do dia ($) – escreve quanto fizeste (ex.: 350 ou -120)</label><input id="pm" type="number" step="0.01" value="'+(hasM(x)?esc(x.pnlM):'')+'" placeholder="'+(x.trades.length?'vazio = soma das trades ('+tsum(x)+')':'ex.: 350')+'"></section>';
   h+='<section class="card"><h2>Plano do dia</h2><div class="f"><div><label>O meu bias</label><select id="p_bias"><option value="">–</option>'+['Alta','Baixa','Neutro'].map(function(v){return '<option'+(pl.bias===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>'+
    '<div><label>Decisão</label><select id="p_dec"><option value="">–</option>'+['TRADE','NO TRADE'].map(function(v){return '<option'+(pl.dec===v?' selected':'')+'>'+v+'</option>'}).join('')+'</select></div>'+
    '<div><label>DOL principal</label><input id="p_dol" type="text" value="'+esc(pl.dol)+'"></div></div>'+
@@ -169,6 +171,7 @@ function wire(){
   document.querySelectorAll('input[data-c]').forEach(function(e){e.onchange=function(){var p=plan(k);p.c=p.c||{};p.c[e.dataset.c]=e.checked;savePlan(k,p);e.parentNode.classList.toggle('done',e.checked);var n=Object.keys(p.c).filter(function(z){return p.c[z]}).length;e.closest('details').querySelector('summary b').textContent='Checklist '+n+' / '+CT;e.closest('details').querySelector('.bar i').style.width=(n/CT*100)+'%'}});
   g('nt').onclick=function(){TMP={id:uid(),photos:[]};S.edit=TMP.id;render();var f=g('tf');if(f)f.scrollIntoView({behavior:'smooth'})};
   document.querySelectorAll('[data-et]').forEach(function(e){e.onclick=function(){S.edit=e.dataset.et;render()}});
+  g('pm').onchange=function(){x.pnlM=g('pm').value;save();render()};
   g('rev').onchange=function(){x.review=g('rev').value;save()};
   g('dph').onchange=function(){addPhotos(g('dph').files).then(function(ids){x.photos=(x.photos||[]).concat(ids);save();render()})};
   document.querySelectorAll('[data-delph]').forEach(function(e){e.onclick=function(ev){ev.stopPropagation();var id=e.dataset.delph;if(!confirm('Apagar esta foto?'))return;
