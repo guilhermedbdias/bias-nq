@@ -192,7 +192,7 @@ var cache={};
 function get(k,u){if(cache[k]&&Date.now()-cache[k].t<60000)return Promise.resolve(cache[k].v);return J(u).then(function(v){cache[k]={t:Date.now(),v:v};return v})}
 function route(){
   var r=(location.hash||'#hoje').slice(1);if(!TABS.some(function(t){return t[0]===r}))r='hoje';
-  document.getElementById('nav').innerHTML=TABS.map(function(t){return '<a href="#'+t[0]+'" class="'+(t[0]===r?'on':'')+'">'+t[1]+'</a>'}).join('')+'<a href="journal.html">Journal</a>';
+  document.getElementById('nav').innerHTML=TABS.map(function(t){return '<a href="#'+t[0]+'" class="'+(t[0]===r?'on':'')+'">'+t[1]+'</a>'}).join('')+'<a href="journal.html">Journal</a><a href="gamma.html">Gamma</a><a href="levels.html">Níveis</a>';
   var app=document.getElementById('app');
   var P=function(a){return Promise.all(a)};
   var out;
