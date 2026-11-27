@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NQ Hub · Gamma</title>
+<style>
+:root{--bg:#0d1014;--surf:#151a21;--surf2:#1b212a;--line:#252c37;--tx:#e8ebf0;--mut:#8b93a1;--hi:#f0b429;--bull:#2fbf71;--bear:#e5484d}
+@media (prefers-color-scheme:light){:root{--bg:#f3f4f7;--surf:#fff;--surf2:#f6f7f9;--line:#dfe2e8;--tx:#14181f;--mut:#6a7280;--hi:#b7791f;--bull:#168a4f;--bear:#cc2f34}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{max-width:980px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.logo{font-weight:700;font-size:17px}.logo span{color:var(--hi)}.goal{color:var(--mut);font-size:13px}
+nav{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 12px 0;overflow-x:auto}
+nav a{padding:8px 14px;color:var(--mut);text-decoration:none;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav a.on{color:var(--tx);border-color:var(--hi);font-weight:600}
+main{max-width:980px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;overflow-x:auto}
+h1{font-size:22px;margin:0 0 4px;font-weight:600}
+h2{font-size:13px;margin:0 0 10px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.n{color:var(--mut);font-size:13px}
+.up{color:var(--bull)}.dn{color:var(--bear)}
+.big{font-size:30px;font-weight:600;margin:2px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px;border-top:1px solid var(--line)}
+th{color:var(--mut);font-weight:500;border-top:0;font-size:13px}
+td.r,th.r{text-align:right}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,input{font:inherit;color:var(--tx);background:var(--surf2);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+button{cursor:pointer;font-weight:600}button.sel{background:var(--hi);border-color:var(--hi);color:#000}
+input{width:110px}
+.bars{display:grid;grid-template-columns:70px 1fr 70px;gap:4px 8px;align-items:center;font-size:12px}
+.bars .k{text-align:right;color:var(--mut)}
+.bt{position:relative;height:12px}
+.bt i{position:absolute;top:0;bottom:0;border-radius:3px}
+.bt b{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--mut)}
+.row-spot .k{color:var(--hi);font-weight:700}.row-spot .bt{background:rgba(240,180,41,.18);border-radius:3px}
+</style></head><body>
+<header><div class="top"><div class="logo">NQ <span>Hub</span></div><div class="goal">10K até fevereiro · disciplina, plano e journal</div></div>
+<nav><a href="index.html#hoje">Hoje</a><a href="index.html#bias">Bias</a><a href="index.html#vol">Volatilidade</a><a href="index.html#amd">AMD</a><a href="index.html#plano">Plano</a><a href="index.html#testes">Testes</a><a href="journal.html">Journal</a><a class="on" href="gamma.html">Gamma</a><a href="levels.html">Níveis</a></nav></header>
+<main id="app"><p class="n">A carregar…</p></main>
+<script>
+var D=null,W='1d';
+function fm(v){var a=Math.abs(v);return (v<0?'−':'+')+'$'+(a>=1e6?(a/1e6).toFixed(1)+'M':a>=1e3?Math.round(a/1e3)+'K':Math.round(a))}
+function nqOf(k){return Math.round(k*D.ratio)}
+function view(){
+  var L=D.sets[W],h='<h1>Gamma do QQQ para o NQ</h1><p class="n">Calculado de manhã a partir das opções do QQQ (Yahoo Finance) e convertido para pontos do NQ. É uma estimativa grátis, não igual à do Sovereign.</p>';
+  h+='<section class="card"><div class="btns"><button data-w="1d" class="'+(W==='1d'?'sel':'')+'">1d (expiry mais próxima)</button><button data-w="7d" class="'+(W==='7d'?'sel':'')+'">até 7 dias</button></div>';
+  h+='<p class="n" style="margin:10px 0 0">QQQ '+D.spot+' · NQ '+D.nq+' · razão '+D.ratio+' · expiry '+L.expiry+'</p></section>';
+  h+='<section class="card"><h2>Regime</h2><p class="big '+(L.regime==='positivo'?'up':'dn')+'">Gamma '+L.regime+'</p><p class="n" style="margin:0">'+(L.regime==='positivo'?'Gamma líquido positivo: os market makers tendem a amortecer movimentos (o preço tende a ficar preso entre as paredes).':'Gamma líquido negativo: os market makers tendem a amplificar movimentos (mais direcional e rápido).')+' Total: '+fm(L.net_total)+' por 1%.</p></section>';
+  function row(n,k,nk,d){return '<tr><td>'+n+'</td><td class="r">'+(k==null?'–':k)+'</td><td class="r"><b>'+(nk==null?'–':nk)+'</b></td><td class="n">'+d+'</td></tr>'}
+  h+='<section class="card"><h2>Níveis</h2><table><tr><th>Nível</th><th class="r">QQQ</th><th class="r">NQ</th><th>O que é</th></tr>'+
+   row('Call wall',L.call_wall,L.call_wall_nq,'strike acima do preço com mais gamma de calls (resistência/íman)')+
+   row('Put wall',L.put_wall,L.put_wall_nq,'strike abaixo do preço com mais gamma de puts (suporte/íman)')+
+   row('Zero gamma',L.zero_gamma,L.zero_gamma_nq,'onde o gamma total muda de sinal (acima = amortece, abaixo = amplifica)')+
+   row('Max pain',L.max_pain,L.max_pain_nq,'strike onde expiram menos opções com valor')+
+   row('Pin',L.pin,L.pin_nq,'strike com mais gamma absoluto (onde o preço tende a ser colado)')+'</table>'+
+   '<p class="btns" style="margin:12px 0 0"><button id="cp">Copiar níveis</button><span class="n" id="ok"></span></p></section>';
+  var S=L.strikes,mx=Math.max.apply(0,S.map(function(s){return Math.abs(s.net)}))||1,sp=D.spot,near=null;
+  S.forEach(function(s){if(near===null||Math.abs(s.k-sp)<Math.abs(near-sp))near=s.k});
+  h+='<section class="card"><h2>Gamma por strike (verde = calls, vermelho = puts)</h2><div class="bars">';
+  S.slice().sort(function(a,b){return b.k-a.k}).forEach(function(s){
+    var w=Math.abs(s.net)/mx*50,l=s.net<0?50-w:50;
+    h+='<div class="k">'+s.k+'</div><div class="bt'+(s.k===near?' row-spot':'')+'"><b></b><i style="left:'+l+'%;width:'+w+'%;background:'+(s.net>=0?'var(--bull)':'var(--bear)')+'"></i></div><div class="n">NQ '+s.nq+'</div>'});
+  h+='</div></section>';
+  h+='<section class="card"><h2>Conversor QQQ → NQ</h2><div class="btns"><input id="cv" type="number" step="0.5" placeholder="strike QQQ"><span id="cvo" class="n"></span></div><p class="n" style="margin:10px 0 0">Escreve o strike do QQQ e vês o preço equivalente no NQ.</p></section>';
+  h+='<p class="n">Como é calculado: gamma de Black-Scholes por opção × open interest, com calls positivas e puts negativas (convenção habitual: assume que os market makers estão long calls e short puts). O open interest do Yahoo é do fecho anterior e as IVs podem estar atrasadas, por isso os números diferem dos de serviços pagos. É contexto, não previsão nem aconselhamento financeiro. Atualizado: '+new Date(D.updated).toLocaleString('pt-PT')+'.</p>';
+  document.getElementById('app').innerHTML=h;
+  document.querySelectorAll('button[data-w]').forEach(function(b){b.onclick=function(){W=b.dataset.w;view()}});
+  document.getElementById('cv').oninput=function(){var v=+this.value;document.getElementById('cvo').textContent=v?'= NQ '+nqOf(v):''};
+  document.getElementById('cp').onclick=function(){
+    var t='Gamma QQQ→NQ ('+W+')\nCall wall: NQ '+L.call_wall_nq+' (QQQ '+L.call_wall+')\nPut wall: NQ '+L.put_wall_nq+' (QQQ '+L.put_wall+')\nZero gamma: NQ '+L.zero_gamma_nq+'\nMax pain: NQ '+L.max_pain_nq+'\nRegime: '+L.regime;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){document.getElementById('ok').textContent='copiado'}).catch(function(){document.getElementById('ok').textContent='não deu para copiar'})}
+}
+fetch('gamma.json?'+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){D=d;view()}).catch(function(){document.getElementById('app').innerHTML='<section class="card"><p class="n">Ainda não há dados. Corre o workflow "Gamma" em Actions (Run workflow).</p></section>'});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)location.reload()});
+</script></body></html>
