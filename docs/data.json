@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-26T13:06:27.887844+00:00",
- "spot": 26301.8,
+ "updated": "2026-11-27T13:02:16.827900+00:00",
+ "spot": 26684.5,
  "prev": 26100.2,
- "total": -15,
+ "total": -21,
  "label": "Bearish",
- "up": 39,
+ "up": 35,
  "levels": {
   "p5": 25058.2,
   "p25": 25673.3,
@@ -17,9 +17,9 @@
    "k": "amd",
    "name": "AMD / DOL (plano)",
    "weight": 15,
-   "score": -10,
-   "contrib": -2,
-   "note": "HTF em baixa; sem dados intradiários hoje; DOL mais próximo: PDH 26351. PDH 26351 PDL 25028 PWH 28279 PWL 24976"
+   "score": -40,
+   "contrib": -6,
+   "note": "HTF em baixa; sem dados intradiários hoje; DOL mais próximo: PDH 26351; preço fora do range de ontem. PDH 26351 PDL 25028 PWH 28279 PWL 24976"
   },
   {
    "k": "eq",
@@ -65,9 +65,9 @@
    "k": "pct",
    "name": "Percentis",
    "weight": 20,
-   "score": -21,
-   "contrib": -4,
-   "note": "preço no percentil 62 (VXN 38.5)"
+   "score": -54,
+   "contrib": -11,
+   "note": "preço no percentil 80 (VXN 38.5)"
   },
   {
    "k": "trend",
@@ -89,17 +89,17 @@
    "k": "macro",
    "name": "Macro Economics",
    "weight": 15,
-   "score": 23,
-   "contrib": 3,
-   "note": "5d: yield10 -4.3%, dólar -0.2%, VIX -5.7%"
+   "score": 49,
+   "contrib": 7,
+   "note": "5d: yield10 -4.3%, dólar -0.1%, VIX -29.1%"
   },
   {
    "k": "season",
    "name": "Seasonality",
    "weight": 10,
-   "score": -2,
+   "score": 3,
    "contrib": 0,
-   "note": "média deste dia da semana: -0.01%"
+   "note": "média deste dia da semana: +0.01%"
   }
  ]
 }
